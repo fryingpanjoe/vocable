@@ -1,7 +1,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script type="text/javascript" charset="UTF-8" src="js/listHandler.js"></script>
 <script type="text/javascript" charset="UTF-8">
 var WORDS = new Array();
 
@@ -14,10 +13,13 @@ function showRandomWord() {
     var both = WORDS[index];
 
     var question = both[0];
+    var solution = both[1];
     if (Math.random() < 0.5) {
         question = both[1];
+        solution = both[0];
     }
     document.getElementById('id_question').innerHTML = question;
+    document.getElementById('test_solution').value = solution;
     document.getElementById('test_answer').focus();
     document.getElementById('test_answer').value = "";    
     
@@ -70,13 +72,9 @@ function handleHideWords() {
 
 function handleTestCheck() {
     var answer = document.getElementById("test_answer").value.trim().toLowerCase();
+    var solution = document.getElementById("test_solution").value.trim().toLowerCase();
     var index = document.getElementById("test_index").value;
-    if (answer != WORDS[index][0].toLowerCase()) {
-        document.getElementById("id_test_result").innerHTML = "Fel!";
-        document.getElementById("test_answer").value = '';
-        return;
-    }
-    if (answer != WORDS[index][1].toLowerCase()) {
+    if (answer != solution) {
         document.getElementById("id_test_result").innerHTML = "Fel!";
         document.getElementById("test_answer").value = '';
         return;
@@ -124,7 +122,7 @@ function onLoad() {
             <h2>Lägg till:</h2>
             <form id="id_add_word_form">
                 <p>Fråga: <input type="text" name="word"> Svar: <input type="text" name="translation">
-                <input type="submit" value="Add word"></p>
+                <input type="submit" value="Lägg till"></p>
             </form>
         </div>
 
@@ -147,13 +145,14 @@ function onLoad() {
     <div id="id_test">
         <form id="id_test_form">
             <span id="id_question"></span><br />
-            <input type="text" name="test_word" id="test_answer">
+            <input type="text" name="test_answer" id="test_answer">
+            <input type="hidden" name="test_solution" id="test_solution">
             <input type="submit" value="Rätta">
         </form>
         <input type="hidden" name="test_index" id="test_index">
         
-        <input type="submit" value="Skip" onClick="handleTestSkip()">
-        <input type="submit" value="Stop test" onClick="handleStopTest()">
+        <input type="submit" value="Hoppa över" onClick="handleTestSkip()">
+        <input type="submit" value="Avsluta test" onClick="handleStopTest()">
         <h3 id="id_test_result"></h3>
     </div>
 </body>
