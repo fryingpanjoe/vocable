@@ -69,18 +69,18 @@ function handleHideWords() {
 }
 
 function handleTestCheck() {
-    var word = document.getElementById("test_word").value;
-    var translation = document.getElementById("test_translation").value;
+    var word = document.getElementById("test_word").value.trim().toLowerCase();
+    var translation = document.getElementById("test_translation").value.trim().toLowerCase();
     var index = document.getElementById("test_index").value;
-    if (word != WORDS[index][0]) {
-        document.getElementById("id_test_result").innerHTML = "Wrong!";
+    if (word != WORDS[index][0].toLowerCase()) {
+        document.getElementById("id_test_result").innerHTML = "Fel!";
         return;
     }
-    if (translation != WORDS[index][1]) {
-        document.getElementById("id_test_result").innerHTML = "Wrong!";
+    if (translation != WORDS[index][1].toLowerCase()) {
+        document.getElementById("id_test_result").innerHTML = "Fel!";
         return;
     }
-    document.getElementById("id_test_result").innerHTML = "Correct!";
+    document.getElementById("id_test_result").innerHTML = "Rätt!";
     showRandomWord();
 }
 
@@ -97,7 +97,7 @@ function onLoad() {
     document.getElementById("id_add_word_form").onsubmit = function(e) {
         e.preventDefault();
         if(this.word.value != '' && this.translation.value != ''){
-            addWord(this.word.value, this.translation.value);
+            addWord(this.word.value.trim(), this.translation.value.trim());
             showWordList();
 
             
@@ -114,23 +114,25 @@ function onLoad() {
 <body onLoad="onLoad()">
     <h1>Krimilingo</h1>
 
-    <div id="id_add_words">
-        <h2>Lägg till:</h2>
-        <form id="id_add_word_form">
-            <p>Fråga: <input type="text" name="word"> Svar: <input type="text" name="translation">
-            <input type="submit" value="Add word"></p>
-        </form>
-    </div>
+    <div id="id_input_mode">
+        <div id="id_add_words">
+            <h2>Lägg till:</h2>
+            <form id="id_add_word_form">
+                <p>Fråga: <input type="text" name="word"> Svar: <input type="text" name="translation">
+                <input type="submit" value="Add word"></p>
+            </form>
+        </div>
 
-    <div id="id_word_list">
-        <h2>Frågelista</h2>
-        <ul id="id_word_list_ul"></ul>
-    </div>
-    <div id="id_show_words_button">
-        <input type="submit" value="Visa frågor" onClick="handleShowWords()">
-    </div>
-    <div id="id_hide_words_button">
-        <input type="submit" value="Dölj frågor" onClick="handleHideWords()">
+        <div id="id_word_list">
+            <h2>Frågelista</h2>
+            <ul id="id_word_list_ul"></ul>
+        </div>
+        <div id="id_show_words_button">
+            <input type="submit" value="Visa frågor" onClick="handleShowWords()">
+        </div>
+        <div id="id_hide_words_button">
+            <input type="submit" value="Dölj frågor" onClick="handleHideWords()">
+        </div>
     </div>
 
     <div id="id_start_test">
