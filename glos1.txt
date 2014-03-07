@@ -1,0 +1,6 @@
+dog:hund
+cat:katt
+thing:sak
+bird:fågel
+red:röd
+green:grön

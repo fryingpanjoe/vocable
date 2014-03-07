@@ -8,6 +8,29 @@ function addWord(lhs, rhs) {
     WORDS.push([lhs, rhs]);
 }
 
+function exportWords(){
+    var output= '';
+    for(var i = 0; i < WORDS.length; i++){
+        output += WORDS[i][0]+':'+WORDS[i][1]+"\n";
+    }
+    document.getElementById("id_import_textarea").value = output;
+}
+
+function importWords(){
+    var temp = document.getElementById("id_import_textarea").value;
+    var rows = temp.split("\n");
+
+    var result = new Array();
+    for(var i = 0; i < rows.length; i++){
+        var cols = rows[i].trim().split(':');
+        if(cols[0] != undefined && cols[1] != undefined){
+            result.push(cols);
+        }
+    }
+    WORDS = result;
+    showWordList();
+}
+
 function showRandomWord() {
     var index = Math.floor(Math.random() * WORDS.length)
     var both = WORDS[index];
@@ -40,6 +63,7 @@ function showWordList() {
 
 function handleStartTest() {
     document.getElementById("id_word_list").style.display = 'none';
+    document.getElementById("id_hide_words_button").style.display = 'none';
     document.getElementById("id_show_words_button").style.display = 'block';
     document.getElementById("id_start_test").style.display = 'none';
     document.getElementById("id_test").style.display = 'block';
@@ -56,6 +80,7 @@ function handleStopTest() {
     document.getElementById("id_test").style.display = 'none';
     document.getElementById("id_test_result").style.display = 'none';
     document.getElementById("id_add_words").style.display = 'block';
+    document.getElementsByName("word")[0].focus();
 }
 
 function handleShowWords() {
@@ -125,7 +150,16 @@ function onLoad() {
                 <input type="submit" value="Lägg till"></p>
             </form>
         </div>
-
+    </div>
+    
+    <div id="id_import_export_mode" style="display:none">
+        <form id="id_import_form">
+            <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
+            <input type="button" value="Importera" onClick="importWords()"><input type="button" value="Exportera" onClick="exportWords()">
+        </form>
+    </div>
+    
+    <div id="id_words_list_div">
         <div id="id_word_list">
             <h2>Frågelista</h2>
             <ul id="id_word_list_ul"></ul>
@@ -135,11 +169,11 @@ function onLoad() {
         </div>
         <div id="id_hide_words_button">
             <input type="submit" value="Dölj frågor" onClick="handleHideWords()">
-        </div>
+        </div>        
     </div>
+    
 
     <div id="id_start_test">
-        <h2>Börja quiz</h2>
         <input type="submit" value="Starta quiz" onClick="handleStartTest()">
     </div>
     <div id="id_test">
