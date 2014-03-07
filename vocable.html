@@ -12,15 +12,15 @@ function addWord(lhs, rhs) {
 function showRandomWord() {
     var index = Math.floor(Math.random() * WORDS.length)
     var both = WORDS[index];
+
+    var question = both[0];
     if (Math.random() < 0.5) {
-        document.getElementById("test_translation").value = both[1];
-        document.getElementById("test_word").focus();
-        document.getElementById("test_word").value = "";
-    } else {
-        document.getElementById("test_word").value = both[0];
-        document.getElementById("test_translation").focus();
-        document.getElementById("test_translation").value = "";
+        question = both[1];
     }
+    document.getElementById('id_question').innerHTML = question;
+    document.getElementById('test_answer').focus();
+    document.getElementById('test_answer').value = "";    
+    
     document.getElementById("test_index").value = index;
 }
 
@@ -69,15 +69,16 @@ function handleHideWords() {
 }
 
 function handleTestCheck() {
-    var word = document.getElementById("test_word").value.trim().toLowerCase();
-    var translation = document.getElementById("test_translation").value.trim().toLowerCase();
+    var answer = document.getElementById("test_answer").value.trim().toLowerCase();
     var index = document.getElementById("test_index").value;
-    if (word != WORDS[index][0].toLowerCase()) {
+    if (answer != WORDS[index][0].toLowerCase()) {
         document.getElementById("id_test_result").innerHTML = "Fel!";
+        document.getElementById("test_answer").value = '';
         return;
     }
-    if (translation != WORDS[index][1].toLowerCase()) {
+    if (answer != WORDS[index][1].toLowerCase()) {
         document.getElementById("id_test_result").innerHTML = "Fel!";
+        document.getElementById("test_answer").value = '';
         return;
     }
     document.getElementById("id_test_result").innerHTML = "Rätt!";
@@ -100,12 +101,16 @@ function onLoad() {
             addWord(this.word.value.trim(), this.translation.value.trim());
             showWordList();
 
-            
             document.getElementById("id_add_word_form").reset();
             document.getElementsByName("word")[0].focus();
         }
     }
-    
+
+    document.getElementById("id_test_form").onsubmit = function(e) {
+        e.preventDefault();
+        handleTestCheck();
+    }    
+        
     document.getElementsByName("word")[0].focus();
     
 }
@@ -140,14 +145,13 @@ function onLoad() {
         <input type="submit" value="Starta quiz" onClick="handleStartTest()">
     </div>
     <div id="id_test">
-        <table>
-            <tr>
-                <td><input type="text" name="test_word" id="test_word"></td>
-                <td><input type="text" name="test_translation" id="test_translation"></td>
-            </tr>
-        </table>
+        <form id="id_test_form">
+            <span id="id_question"></span><br />
+            <input type="text" name="test_word" id="test_answer">
+            <input type="submit" value="Rätta">
+        </form>
         <input type="hidden" name="test_index" id="test_index">
-        <input type="submit" value="Check" onClick="handleTestCheck()">
+        
         <input type="submit" value="Skip" onClick="handleTestSkip()">
         <input type="submit" value="Stop test" onClick="handleStopTest()">
         <h3 id="id_test_result"></h3>
