@@ -1,6 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+    body {font-family: Verdana;width:700px;}
+    #id_words_list_div{float:right;}
+    #modes{float:left;}
+    #id_word_list{border:1px solid lightgray;}
+    table, th, td{border: 1px solid lightgray;}
+</style>
 <script type="text/javascript" charset="UTF-8">
 var WORDS = new Array();
 
@@ -50,14 +57,26 @@ function showRandomWord() {
 }
 
 function showWordList() {
-    var list = document.getElementById("id_word_list_ul");
+    var list = document.getElementById("id_word_list_table");
+
     while (list.firstChild) {
         list.removeChild(list.firstChild);
     }
     for (var i = 0; i < WORDS.length; i++) {
-        var item = document.createElement("li");
-        item.innerHTML = "<p>" + WORDS[i][0] + " <-> " + WORDS[i][1] + "</p>";
-        list.appendChild(item)
+        var item = document.createElement("tr");
+        item.innerHTML = "<td>" + WORDS[i][0] + "</td><td>" + WORDS[i][1] + "</td>";
+        list.appendChild(item);
+    }
+}
+
+function setActiveMode(mode){
+    var modes = ['id_input_mode', 'id_import_export_mode', 'id_test_mode'];
+    for(var i=0; i < modes.length; i++){
+        if(modes[i] != mode){
+            document.getElementById(modes[i]).style.display = 'none';
+        }else{
+            document.getElementById(modes[i]).style.display = 'block';
+        }
     }
 }
 
@@ -66,7 +85,7 @@ function handleStartTest() {
     document.getElementById("id_hide_words_button").style.display = 'none';
     document.getElementById("id_show_words_button").style.display = 'block';
     document.getElementById("id_start_test").style.display = 'none';
-    document.getElementById("id_test").style.display = 'block';
+    document.getElementById("id_test_mode").style.display = 'block';
     document.getElementById("id_test_result").innerHTML = "";
     document.getElementById("id_test_result").style.display = 'block';
     document.getElementById("id_add_words").style.display = 'none';
@@ -77,7 +96,7 @@ function handleStopTest() {
     document.getElementById("id_word_list").style.display = 'block';
     document.getElementById("id_show_words_button").style.display = 'none';
     document.getElementById("id_start_test").style.display = 'block';
-    document.getElementById("id_test").style.display = 'none';
+    document.getElementById("id_test_mode").style.display = 'none';
     document.getElementById("id_test_result").style.display = 'none';
     document.getElementById("id_add_words").style.display = 'block';
     document.getElementsByName("word")[0].focus();
@@ -115,7 +134,7 @@ function handleTestSkip() {
 function onLoad() {
     document.getElementById("id_show_words_button").style.display = 'none';
 
-    document.getElementById("id_test").style.display = 'none';
+    document.getElementById("id_test_mode").style.display = 'none';
     document.getElementById("id_test_result").style.display = 'none';
 
     document.getElementById("id_add_word_form").onsubmit = function(e) {
@@ -141,28 +160,50 @@ function onLoad() {
 </head>
 <body onLoad="onLoad()">
     <h1>Krimilingo</h1>
+    <div id="modes">
+        <div id="id_input_mode">
+            <div id="id_add_words">
+                <form id="id_add_word_form">
+                    <p>Fråga: <input type="text" name="word"> Svar: <input type="text" name="translation">
+                    <input type="submit" value="Lägg till"></p>
+                </form>
+            </div>
+        </div>
 
-    <div id="id_input_mode">
-        <div id="id_add_words">
-            <h2>Lägg till:</h2>
-            <form id="id_add_word_form">
-                <p>Fråga: <input type="text" name="word"> Svar: <input type="text" name="translation">
-                <input type="submit" value="Lägg till"></p>
+        <div id="id_import_export_mode" style="display:none">
+            <form id="id_import_form">
+                <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
+                <input type="button" value="Importera" onClick="importWords()"><input type="button" value="Exportera" onClick="exportWords()">
             </form>
         </div>
+
+        <div id="id_start_test">
+            <input type="submit" value="Starta quiz" onClick="handleStartTest()">
+        </div>
+        <div id="id_test_mode">
+            <form id="id_test_form">
+                <span id="id_question"></span><br />
+                <input type="text" name="test_answer" id="test_answer">
+                <input type="hidden" name="test_solution" id="test_solution">
+                <input type="submit" value="Rätta">
+            </form>
+            <input type="hidden" name="test_index" id="test_index">
+
+            <input type="submit" value="Hoppa över" onClick="handleTestSkip()">
+            <input type="submit" value="Avsluta test" onClick="handleStopTest()">
+            <h3 id="id_test_result"></h3>
+        </div>
     </div>
-    
-    <div id="id_import_export_mode" style="display:none">
-        <form id="id_import_form">
-            <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
-            <input type="button" value="Importera" onClick="importWords()"><input type="button" value="Exportera" onClick="exportWords()">
-        </form>
-    </div>
-    
+        
     <div id="id_words_list_div">
         <div id="id_word_list">
             <h2>Frågelista</h2>
-            <ul id="id_word_list_ul"></ul>
+            <table>
+                <thead>
+                    <tr><th>Fråga</th><th>Svar</th></tr>
+                </thead>
+                <tbody id="id_word_list_table"></tbody>
+            </table>
         </div>
         <div id="id_show_words_button">
             <input type="submit" value="Visa frågor" onClick="handleShowWords()">
@@ -170,24 +211,6 @@ function onLoad() {
         <div id="id_hide_words_button">
             <input type="submit" value="Dölj frågor" onClick="handleHideWords()">
         </div>        
-    </div>
-    
-
-    <div id="id_start_test">
-        <input type="submit" value="Starta quiz" onClick="handleStartTest()">
-    </div>
-    <div id="id_test">
-        <form id="id_test_form">
-            <span id="id_question"></span><br />
-            <input type="text" name="test_answer" id="test_answer">
-            <input type="hidden" name="test_solution" id="test_solution">
-            <input type="submit" value="Rätta">
-        </form>
-        <input type="hidden" name="test_index" id="test_index">
-        
-        <input type="submit" value="Hoppa över" onClick="handleTestSkip()">
-        <input type="submit" value="Avsluta test" onClick="handleStopTest()">
-        <h3 id="id_test_result"></h3>
-    </div>
+    </div>    
 </body>
 </html>
