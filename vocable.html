@@ -3,6 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
 th{text-align: left;}
+tbody td{
+    border:1px solid black;
+}
 ul.tabs {
 float:left;
 list-style:none;
@@ -228,9 +231,7 @@ function onLoad() {
         handleTestCheck();
     }    
         
-    $('[name="word"]').focus();    
-    
-    
+    $('[name="word"]').focus();
 }
 $(document).ready(function() {
     //hiding tab content except first one
