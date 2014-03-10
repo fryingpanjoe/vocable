@@ -217,7 +217,7 @@ function onLoad() {
 
     document.getElementById("id_add_word_form").onsubmit = function(e) {
         e.preventDefault();
-        if(this.word.value != '' && this.translation.value != ''){
+        if(this.word.value.trim() != '' && this.translation.value.trim() != ''){
             addWord(this.word.value.trim(), this.translation.value.trim());
             showWordList();
 
