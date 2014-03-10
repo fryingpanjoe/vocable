@@ -194,7 +194,7 @@ function showWordList() {
     }
     for (var i = 0; i < WORDS.length; i++) {
         var item = document.createElement("tr");
-        item.innerHTML = "<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\"></td><td>" + WORDS[i][1] + "</td>";
+        item.innerHTML = "<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\" style=\"border: 0\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + "</td>";
         list.appendChild(item);
     }
 }
