@@ -199,23 +199,19 @@ function showWordList() {
 }
 
 function handleStartTest() {
-    document.getElementById("id_hide_words_button").style.display = 'none';
-    document.getElementById("id_show_words_button").style.display = 'block';
     document.getElementById("id_start_test").style.display = 'none';
     document.getElementById("id_test_mode").style.display = 'block';
     document.getElementById("id_test_result").innerHTML = "";
     document.getElementById("id_test_result").style.display = 'block';
-    document.getElementById("id_add_words").style.display = 'none';
+    
     showRandomWord();
 }
 
 function handleStopTest() {
     document.getElementById("id_word_list").style.display = 'block';
-    document.getElementById("id_show_words_button").style.display = 'none';
     document.getElementById("id_start_test").style.display = 'block';
     document.getElementById("id_test_mode").style.display = 'none';
     document.getElementById("id_test_result").style.display = 'none';
-    document.getElementById("id_add_words").style.display = 'block';
     document.getElementsByName("word")[0].focus();
 }
 
