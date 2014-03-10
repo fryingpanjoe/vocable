@@ -2,6 +2,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
+*{font-family: Arial, sans-serif;}
+
 th{text-align: left;}
 tbody td{
     border:1px solid black;
@@ -99,6 +101,43 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
 </script>
 
 <script type="text/javascript" charset="UTF-8">
+
+var MODE_QUIZ = 'quiz';
+var MODE_LANG = 'lang';
+var MODE_MATH = 'math';
+
+var CONFIG = {
+    'quiz': {
+        lhs_label: 'Fråga',
+        rhs_label: 'Svar',
+        lhs_rhs_glue: '',
+        input_label: 'Frågor',
+        load_label: 'Importera/Exportera',
+        quiz_label: 'Quiz',
+        is_bidirectional: false,
+    },
+    'lang': {
+        lhs_label: 'Svenska',
+        rhs_label: 'Engelska',
+        lhs_rhs_glue: '',
+        input_label: 'Glosor',
+        load_label: 'Importera/Exportera',
+        quiz_label: 'Glosprov',
+        is_bidirectional: true,
+    },
+    'math': {
+        lhs_label: 'Tal',
+        rhs_label: 'Resultat',
+        lhs_rhs_glue: '=',
+        input_label: 'Tal',
+        load_label: 'Importera/Exportera',
+        quiz_label: 'Test',
+        is_bidirectional: false,
+    },
+}
+
+var CURRENT_MODE = MODE_QUIZ;
+
 var WORDS = new Array();
 
 function addWord(lhs, rhs) {
@@ -134,7 +173,7 @@ function showRandomWord() {
 
     var question = both[0];
     var solution = both[1];
-    if (Math.random() < 0.5) {
+    if (CONFIG[CURRENT_MODE].is_bidirectional && Math.random() < 0.5) {
         question = both[1];
         solution = both[0];
     }
@@ -154,7 +193,7 @@ function showWordList() {
     }
     for (var i = 0; i < WORDS.length; i++) {
         var item = document.createElement("tr");
-        item.innerHTML = "<td>" + WORDS[i][0] + "</td><td>" + WORDS[i][1] + "</td>";
+        item.innerHTML = "<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\"></td><td>" + WORDS[i][1] + "</td>";
         list.appendChild(item);
     }
 }
@@ -209,6 +248,9 @@ function handleTestSkip() {
     showRandomWord();
 }
 
+function handleSelectMode() {
+}
+
 function onLoad() {
     $("#id_show_words_button").hide();
 
@@ -253,12 +295,25 @@ $(document).ready(function() {
         return false;
     });
  
+    $("#mode_select").change(function() {
+        CURRENT_MODE = this.value;
+        $('.flux').each(function(index) {
+            this.innerHTML = CONFIG[CURRENT_MODE][this.id];
+        })
+    });
 });
 </script>
 </head>
 <body onLoad="onLoad()">
     <h1>Krimilingo</h1>
-
+    <div style="position: absolute; top: 8px; right: 8px; padding-left: 16px; padding-bottom: 32px;">
+        <span style="font-size: 18px; font-weight: bold;">Mode:</span>
+        <select style="font-size: 18px;" id="mode_select">
+            <option value="quiz">Quiz</option>
+            <option value="lang">Språk</option>
+            <option value="math">Matematik</option>
+        </select>
+    </div>
     <ul class="tabs">
        <li><a href="#tab1" class="flux" id="input_label">Inmatning</a></li>
        <li><a href="#tab2" class="flux" id="quiz_label">Quiz</a></li>
@@ -270,7 +325,7 @@ $(document).ready(function() {
                 <form id="id_add_word_form">
                     <table>
                         <thead>
-                            <tr><th class="flux" id="lhs_label">Fråga<br /><input type="text" name="word"></th><th class="flux" id="rhs_label">Svar<br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
+                            <tr><th><span class="flux" id="lhs_label">Fråga</span><br /><input type="text" name="word"></th><th><br /></th><th><span class="flux" id="rhs_label">Svar</span><br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
                         </thead>
                         <tbody id="id_word_list_table"></tbody>
                     </table>
