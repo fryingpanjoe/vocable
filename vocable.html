@@ -156,17 +156,6 @@ function showWordList() {
     }
 }
 
-function setActiveMode(mode){
-    var modes = ['id_input_mode', 'id_import_export_mode', 'id_test_mode'];
-    for(var i=0; i < modes.length; i++){
-        if(modes[i] != mode){
-            document.getElementById(modes[i]).style.display = 'none';
-        }else{
-            document.getElementById(modes[i]).style.display = 'block';
-        }
-    }
-}
-
 function handleStartTest() {
     document.getElementById("id_hide_words_button").style.display = 'none';
     document.getElementById("id_show_words_button").style.display = 'block';
@@ -218,10 +207,10 @@ function handleTestSkip() {
 }
 
 function onLoad() {
-    $("id_show_words_button").hide();
+    $("#id_show_words_button").hide();
 
-    $("id_test_mode").hide();
-    document.getElementById("id_test_result").style.display = 'none';
+    $("#id_test_mode").hide();
+    $("#id_test_result").hide();
 
     document.getElementById("id_add_word_form").onsubmit = function(e) {
         e.preventDefault();
@@ -315,6 +304,5 @@ $(document).ready(function() {
             </div>
        </div>
     </div>
-    
 </body>
 </html>
