@@ -4,3 +4,7 @@ thing:sak
 bird:fågel
 red:röd
 green:grön
+blue:blå
+drain:vask
+cottage:stuga
+trollop:slampa
