@@ -142,6 +142,7 @@ var WORDS = new Array();
 
 function addWord(lhs, rhs) {
     WORDS.push([lhs, rhs]);
+    exportWords();
 }
 
 function exportWords(){
@@ -311,12 +312,12 @@ $(document).ready(function() {
         </select>
     </div>
     <ul class="tabs">
-       <li><a href="#tab1" class="flux" id="input_label">Inmatning</a></li>
-       <li><a href="#tab2" class="flux" id="quiz_label">Quiz</a></li>
+       <li><a href="#input" class="flux" id="input_label">Inmatning</a></li>
+       <li><a href="#quiz" class="flux" id="quiz_label">Quiz</a></li>
        <li><a href="#load" class="flux" id="load_label">Importera/exportera</a></li>
     </ul>
     <div class="tabContainer">
-       <div id="tab1" class="tabContent">
+       <div id="input" class="tabContent">
             <div id="id_word_list">
                 <form id="id_add_word_form">
                     <table>
@@ -330,7 +331,7 @@ $(document).ready(function() {
        </div>
        <!-- / END #tab1 -->
 
-       <div id="tab2" class="tabContent">
+       <div id="quiz" class="tabContent">
            <div id="id_start_test">
                 <input type="submit" value="Starta quiz" onClick="handleStartTest()">
             </div>
