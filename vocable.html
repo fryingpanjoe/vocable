@@ -254,16 +254,15 @@ $(document).ready(function() {
     });
  
 });
-
 </script>
 </head>
 <body onLoad="onLoad()">
     <h1>Krimilingo</h1>
-    
+
     <ul class="tabs">
-       <li><a href="#tab1">Inmatning</a></li>
-       <li><a href="#tab2">Quiz</a></li>
-       <li><a href="#load">Importera/exportera</a></li>
+       <li><a href="#tab1" class="flux" id="input_label">Inmatning</a></li>
+       <li><a href="#tab2" class="flux" id="quiz_label">Quiz</a></li>
+       <li><a href="#load" class="flux" id="load_label">Importera/exportera</a></li>
     </ul>
     <div class="tabContainer">
        <div id="tab1" class="tabContent">
@@ -271,7 +270,7 @@ $(document).ready(function() {
                 <form id="id_add_word_form">
                     <table>
                         <thead>
-                            <tr><th>Fråga<br /><input type="text" name="word"></th><th>Svar<br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
+                            <tr><th class="flux" id="lhs_label">Fråga<br /><input type="text" name="word"></th><th class="flux" id="rhs_label">Svar<br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
                         </thead>
                         <tbody id="id_word_list_table"></tbody>
                     </table>
@@ -281,7 +280,6 @@ $(document).ready(function() {
        <!-- / END #tab1 -->
 
        <div id="tab2" class="tabContent">
-           <h2>Quiz</h2>
            <div id="id_start_test">
                 <input type="submit" value="Starta quiz" onClick="handleStartTest()">
             </div>
@@ -301,10 +299,10 @@ $(document).ready(function() {
        </div>
        
        <div id="load" class="tabContent">
-                <form id="id_import_form">
-                    <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
-                    <input type="button" value="Importera" onClick="importWords()"><input type="button" value="Exportera" onClick="exportWords()">
-                </form>
+            <form id="id_import_form">
+                <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
+                <input type="button" value="Importera" onClick="importWords()"><input type="button" value="Exportera" onClick="exportWords()">
+            </form>
        </div>
     </div>
 </body>
