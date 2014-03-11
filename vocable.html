@@ -114,7 +114,7 @@ var CONFIG = {
         input_label: 'Frågor',
         load_label: 'Importera/Exportera',
         quiz_label: 'Quiz',
-        is_bidirectional: false,
+        is_bidirectional: false
     },
     'lang': {
         lhs_label: 'Svenska',
@@ -123,7 +123,7 @@ var CONFIG = {
         input_label: 'Glosor',
         load_label: 'Importera/Exportera',
         quiz_label: 'Glosprov',
-        is_bidirectional: true,
+        is_bidirectional: true
     },
     'math': {
         lhs_label: 'Tal',
@@ -132,8 +132,8 @@ var CONFIG = {
         input_label: 'Tal',
         load_label: 'Importera/Exportera',
         quiz_label: 'Test',
-        is_bidirectional: false,
-    },
+        is_bidirectional: false
+    }
 }
 
 var CURRENT_MODE = MODE_QUIZ;
@@ -159,7 +159,7 @@ function importWords(){
 
     var result = new Array();
     for(var i = 0; i < rows.length; i++){
-        var cols = rows[i].trim().split(':');
+        var cols = $.trim(rows[i]).split(':');
         if(cols[0] != undefined && cols[1] != undefined){
             result.push(cols);
         }
@@ -255,14 +255,18 @@ function onLoad() {
     $("#id_test_result").hide();
 
     document.getElementById("id_add_word_form").onsubmit = function(e) {
-        e.preventDefault();
-        if(this.word.value.trim() != '' && this.translation.value.trim() != ''){
-            addWord(this.word.value.trim(), this.translation.value.trim());
+        
+        var word = $('[name="word"]').val();
+        var translation = $('[name="translation"]').val();
+        if($.trim(word) != '' && $.trim(translation) != ''){
+            addWord($.trim(word), $.trim(translation));
             showWordList();
 
             document.getElementById("id_add_word_form").reset();
             document.getElementsByName("word")[0].focus();
         }
+        e.returnValue = false;
+        if(e.preventDefault) e.preventDefault();
     }
 
     document.getElementById("id_test_form").onsubmit = function(e) {
@@ -322,7 +326,8 @@ $(document).ready(function() {
                 <form id="id_add_word_form">
                     <table>
                         <thead>
-                            <tr><th><span class="flux" id="lhs_label">Fråga</span><br /><input type="text" name="word"></th><th><br /></th><th><span class="flux" id="rhs_label">Svar</span><br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
+                            <tr><th><span class="flux" id="lhs_label">Fråga</span><br /><input type="text" name="word"></th>
+                                <th><br /></th><th><span class="flux" id="rhs_label">Svar</span><br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
                         </thead>
                         <tbody id="id_word_list_table"></tbody>
                     </table>
