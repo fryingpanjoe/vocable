@@ -150,7 +150,7 @@ function exportWords(){
     for(var i = 0; i < WORDS.length; i++){
         output += WORDS[i][0]+':'+WORDS[i][1]+"\n";
     }
-    document.getElementById("id_import_textarea").value = output;
+    $("#id_import_textarea").val(output);
 }
 
 function importWords(){
@@ -178,12 +178,12 @@ function showRandomWord() {
         question = both[1];
         solution = both[0];
     }
-    document.getElementById('id_question').innerHTML = question;
-    document.getElementById('test_solution').value = solution;
-    document.getElementById('test_answer').focus();
-    document.getElementById('test_answer').value = "";    
+    $('#id_question').html(question);
+    $('#test_solution').val(solution);
     
-    document.getElementById("test_index").value = index;
+    $('#test_answer').val("");    
+    $('#test_answer').focus();
+    $('#test_index').val(index);
 }
 
 function showWordList() {
@@ -198,32 +198,22 @@ function showWordList() {
 }
 
 function handleStartTest() {
-    document.getElementById("id_start_test").style.display = 'none';
-    document.getElementById("id_test_mode").style.display = 'block';
-    document.getElementById("id_test_result").innerHTML = "";
-    document.getElementById("id_test_result").style.display = 'block';
-    
+    $("#id_start_test").hide();
+    $("#id_test_mode").show();
+    $("#id_test_result").show();
+
+    $("#id_test_result").html("");
+
     showRandomWord();
 }
 
 function handleStopTest() {
-    document.getElementById("id_word_list").style.display = 'block';
-    document.getElementById("id_start_test").style.display = 'block';
-    document.getElementById("id_test_mode").style.display = 'none';
-    document.getElementById("id_test_result").style.display = 'none';
-    document.getElementsByName("word")[0].focus();
-}
+    $("#id_test_mode").hide();
+    $("#id_test_result").hide();
+    $("#id_word_list").show();
+    $("#id_start_test").show();
 
-function handleShowWords() {
-    document.getElementById("id_word_list").style.display = 'block';
-    document.getElementById("id_show_words_button").style.display = 'none';
-    document.getElementById("id_hide_words_button").style.display = 'block';
-}
-
-function handleHideWords() {
-    document.getElementById("id_word_list").style.display = 'none';
-    document.getElementById("id_show_words_button").style.display = 'block';
-    document.getElementById("id_hide_words_button").style.display = 'none';
+    $('[name="word"]').focus();
 }
 
 function handleTestCheck() {
@@ -231,11 +221,11 @@ function handleTestCheck() {
     var solution = $.trim($("#test_solution").val().toLowerCase());
     var index = $("#test_index").val();
     if (answer != solution) {
-        document.getElementById("id_test_result").innerHTML = "Fel!";
-        document.getElementById("test_answer").value = '';
+        $("#id_test_result").html("Fel!");
+        $("#test_answer").val("");
         return;
     }
-    document.getElementById("id_test_result").innerHTML = "Rätt!";
+    $("#id_test_result").html("Rätt!");
     showRandomWord();
 }
 
@@ -260,8 +250,8 @@ function onLoad() {
             
             showWordList();
 
-            document.getElementById("id_add_word_form").reset();
-            document.getElementsByName("word")[0].focus();
+            $("#id_add_word_form")[0].reset();
+            $('[name="word"]').focus();
         }
         e.returnValue = false;
         if(e.preventDefault) e.preventDefault();
