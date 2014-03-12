@@ -229,8 +229,8 @@ function handleHideWords() {
 }
 
 function handleTestCheck() {
-    var answer = document.getElementById("test_answer").value.trim().toLowerCase();
-    var solution = document.getElementById("test_solution").value.trim().toLowerCase();
+    var answer = $.trim(document.getElementById("test_answer").val().toLowerCase());
+    var solution = $.trim(document.getElementById("test_solution").val().toLowerCase());
     var index = document.getElementById("test_index").value;
     if (answer != solution) {
         document.getElementById("id_test_result").innerHTML = "Fel!";
@@ -254,12 +254,12 @@ function onLoad() {
     $("#id_test_mode").hide();
     $("#id_test_result").hide();
 
-    document.getElementById("id_add_word_form").onsubmit = function(e) {
-        
-        var word = $('[name="word"]').val();
-        var translation = $('[name="translation"]').val();
-        if($.trim(word) != '' && $.trim(translation) != ''){
-            addWord($.trim(word), $.trim(translation));
+    $( "#id_add_word_form" ).submit(function( e ) {    
+        var word = $.trim($('[name="word"]').val());
+        var translation = $.trim($('[name="translation"]').val());
+        if(word != '' && translation != ''){
+            addWord(word, translation);
+            
             showWordList();
 
             document.getElementById("id_add_word_form").reset();
@@ -267,12 +267,13 @@ function onLoad() {
         }
         e.returnValue = false;
         if(e.preventDefault) e.preventDefault();
-    }
+    });
 
-    document.getElementById("id_test_form").onsubmit = function(e) {
-        e.preventDefault();
+    $( "#id_test_form" ).submit(function( e ) {        
         handleTestCheck();
-    }    
+        e.returnValue = false;
+        if(e.preventDefault) e.preventDefault();        
+    });
         
     $('[name="word"]').focus();
 }
