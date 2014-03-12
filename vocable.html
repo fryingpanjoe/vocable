@@ -187,15 +187,13 @@ function showRandomWord() {
 }
 
 function showWordList() {
-    var list = document.getElementById("id_word_list_table");
+    var list = $("#id_word_list_table");
+    list.html('');
 
-    while (list.firstChild) {
-        list.removeChild(list.firstChild);
-    }
     for (var i = 0; i < WORDS.length; i++) {
-        var item = document.createElement("tr");
-        item.innerHTML = "<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\" style=\"border: 0\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + "</td>";
-        list.appendChild(item);
+        var item = $("<tr></tr>");
+        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\" style=\"border: 0\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + "</td>");
+        list.append(item);
     }
 }
 
