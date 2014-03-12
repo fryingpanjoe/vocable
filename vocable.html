@@ -229,9 +229,9 @@ function handleHideWords() {
 }
 
 function handleTestCheck() {
-    var answer = $.trim(document.getElementById("test_answer").val().toLowerCase());
-    var solution = $.trim(document.getElementById("test_solution").val().toLowerCase());
-    var index = document.getElementById("test_index").value;
+    var answer = $.trim($("#test_answer").val().toLowerCase());
+    var solution = $.trim($("#test_solution").val().toLowerCase());
+    var index = $("#test_index").val();
     if (answer != solution) {
         document.getElementById("id_test_result").innerHTML = "Fel!";
         document.getElementById("test_answer").value = '';
