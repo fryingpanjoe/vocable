@@ -262,12 +262,12 @@ function onLoad() {
     $("#id_test_mode").hide();
     $("#id_test_result").hide();
 
-    $( "#id_add_word_form" ).submit(function( e ) {    
+    $( "#id_add_word_form" ).submit(function( e ) {
         var word = $.trim($('[name="word"]').val());
         var translation = $.trim($('[name="translation"]').val());
         if(word != '' && translation != ''){
             addWord(word, translation);
-            
+
             showWordList();
 
             $("#id_add_word_form")[0].reset();
@@ -277,34 +277,34 @@ function onLoad() {
         if(e.preventDefault) e.preventDefault();
     });
 
-    $( "#id_test_form" ).submit(function( e ) {        
+    $( "#id_test_form" ).submit(function( e ) {
         handleTestCheck();
         e.returnValue = false;
-        if(e.preventDefault) e.preventDefault();        
+        if(e.preventDefault) e.preventDefault();
     });
-        
+
     $('[name="word"]').focus();
 }
 $(document).ready(function() {
     //hiding tab content except first one
-    $(".tabContent").not(":first").hide(); 
-    // adding Active class to first selected tab and show 
-    $("ul.tabs li:first").addClass("active").show();  
- 
+    $(".tabContent").not(":first").hide();
+    // adding Active class to first selected tab and show
+    $("ul.tabs li:first").addClass("active").show();
+
     // Click event on tab
     $("ul.tabs li").click(function() {
         // Removing class of Active tab
-        $("ul.tabs li.active").removeClass("active"); 
+        $("ul.tabs li.active").removeClass("active");
         // Adding Active class to Clicked tab
-        $(this).addClass("active"); 
+        $(this).addClass("active");
         // hiding all the tab contents
-        $(".tabContent").hide();        
+        $(".tabContent").hide();
         // showing the clicked tab's content using fading effect
-        $($('a',this).attr("href")).fadeIn('fast'); 
- 
+        $($('a',this).attr("href")).fadeIn('fast');
+
         return false;
     });
- 
+
     $("#mode_select").change(function() {
         CURRENT_MODE = this.value;
         $('.flux').each(function(index) {
@@ -342,7 +342,7 @@ $(document).ready(function() {
                             <tbody id="id_word_list_table"></tbody>
                         </table>
                     </form>
-                </div>          
+                </div>
            </div>
 
            <div id="quiz" class="tabContent">
