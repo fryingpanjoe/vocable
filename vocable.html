@@ -177,6 +177,8 @@ function importWords(){
 
 function showRandomWord() {
     if (TEST_WORDS.length == 0) {
+        $("#test_check_button").hide();
+        $("#test_skip_button").hide();
         $("#id_test_result").html("Du klarade provet!");
         return;
     }
@@ -354,12 +356,12 @@ $(document).ready(function() {
                         <span id="id_question"></span><br />
                         <input type="text" name="test_answer" id="test_answer">
                         <input type="hidden" name="test_solution" id="test_solution">
-                        <input type="submit" value="Rätta">
+                        <input type="submit" value="Rätta" id="test_check_button">
                     </form>
                     <input type="hidden" name="test_index" id="test_index">
 
-                    <input type="submit" value="Hoppa över" onClick="handleTestSkip()">
-                    <input type="submit" value="Avsluta test" onClick="handleStopTest()">
+                    <input type="submit" value="Hoppa över" onClick="handleTestSkip()" id="test_skip_button">
+                    <input type="submit" value="Avsluta test" onClick="handleStopTest()" id="test_end_button">
                     <h3 id="id_test_result"></h3>
                 </div>
            </div>
