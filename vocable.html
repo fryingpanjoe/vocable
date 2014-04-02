@@ -80,6 +80,10 @@ border-top-left-radius:0;
 font-size: 12px;
 padding:20px;
 }
+
+.word_list_table td{
+border: 0;
+}
 </style>
 <script type="text/javascript" charset="UTF-8">
 /*! jQuery v1.11.0 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
@@ -192,7 +196,7 @@ function showWordList() {
 
     for (var i = 0; i < WORDS.length; i++) {
         var item = $("<tr></tr>");
-        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\" style=\"border: 0\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + "</td>");
+        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + "</td>");
         list.append(item);
     }
 }
@@ -314,7 +318,7 @@ $(document).ready(function() {
            <div id="input" class="tabContent">
                 <div id="id_word_list">
                     <form id="id_add_word_form">
-                        <table>
+                        <table class="word_list_table">
                             <thead>
                                 <tr><th><span class="flux" id="lhs_label">Fråga</span><br /><input type="text" name="word"></th>
                                     <th><br /></th><th><span class="flux" id="rhs_label">Svar</span><br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
