@@ -142,7 +142,10 @@ var CONFIG = {
 
 var CURRENT_MODE = MODE_QUIZ;
 
+var CORRECT_THRESHOLD = 2;
+
 var WORDS = new Array();
+var TEST_WORDS = new Array();
 
 function addWord(lhs, rhs) {
     WORDS.push([lhs, rhs]);
@@ -173,9 +176,12 @@ function importWords(){
 }
 
 function showRandomWord() {
-    var index = Math.floor(Math.random() * WORDS.length)
-    var both = WORDS[index];
-
+    if (TEST_WORDS.length == 0) {
+        $("#id_test_result").html("Du klarade provet!");
+        return;
+    }
+    var index = Math.floor(Math.random() * TEST_WORDS.length);
+    var both = TEST_WORDS[index].words;
     var question = both[0];
     var solution = both[1];
     if (CONFIG[CURRENT_MODE].is_bidirectional && Math.random() < 0.5) {
@@ -205,7 +211,13 @@ function handleStartTest() {
     $("#id_test_mode").show();
     $("#id_test_result").show();
     $("#id_test_result").html("");
-
+    TEST_WORDS = new Array();
+    for (var i = 0; i < WORDS.length; i++) {
+        TEST_WORDS.push({
+            words: WORDS[i],
+            correct: 0
+        });
+    }
     showRandomWord();
 }
 
@@ -219,6 +231,9 @@ function handleStopTest() {
 }
 
 function handleTestCheck() {
+    if (TEST_WORDS.length == 0) {
+        return;
+    }
     var answer = $.trim($("#test_answer").val().toLowerCase());
     var solution = $.trim($("#test_solution").val().toLowerCase());
     var index = $("#test_index").val();
@@ -226,6 +241,9 @@ function handleTestCheck() {
         $("#id_test_result").html("Fel!");
         $("#test_answer").val("");
         return;
+    }
+    if (++TEST_WORDS[index].correct >= CORRECT_THRESHOLD) {
+        TEST_WORDS.splice(index, 1);
     }
     $("#id_test_result").html("Rätt!");
     showRandomWord();
