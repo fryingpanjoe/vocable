@@ -258,6 +258,25 @@ function handleTestSkip() {
 function handleSelectMode() {
 }
 
+
+function handleFileSelect(evt) {
+	var files = evt.target.files;
+	// Import each files content to the textarea
+	for (var i = 0, f; f = files[i]; i++) {
+		var reader = new FileReader();
+		console.log(f);
+
+		reader.onload = (function(theFile) {
+			return function(e) {
+			  
+			  $('#id_import_textarea').html($('#id_import_textarea').html()+e.target.result);
+			};
+		})(f);		
+		reader.readAsText(f);
+	}
+	importWords();
+}
+
 function onLoad() {
     $("#id_show_words_button").hide();
 
@@ -293,6 +312,8 @@ $(document).ready(function() {
     // adding Active class to first selected tab and show
     $("ul.tabs li:first").addClass("active").show();
 
+	$('#files').change(handleFileSelect);
+	
     // Click event on tab
     $("ul.tabs li").click(function() {
         // Removing class of Active tab
@@ -369,7 +390,9 @@ $(document).ready(function() {
            <div id="load" class="tabContent">
                 <form id="id_import_form">
                     <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
-                    <input type="button" value="Importera" onClick="importWords()"><input type="button" value="Exportera" onClick="exportWords()">
+					Läs in listor
+					<input type="file" id="files" name="files[]" multiple /><br />
+                    <input type="button" value="Exportera" onClick="exportWords()">
                 </form>
            </div>
         </div>
