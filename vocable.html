@@ -116,6 +116,7 @@ var CONFIG = {
         rhs_label: 'Svar',
         lhs_rhs_glue: '',
         input_label: 'Frågor',
+        entities_label: 'frågor',
         load_label: 'Importera/Exportera',
         quiz_label: 'Quiz',
         is_bidirectional: false
@@ -125,6 +126,7 @@ var CONFIG = {
         rhs_label: 'Engelska',
         lhs_rhs_glue: '',
         input_label: 'Glosor',
+        entities_label: 'glosor',
         load_label: 'Importera/Exportera',
         quiz_label: 'Glosprov',
         is_bidirectional: true
@@ -134,6 +136,7 @@ var CONFIG = {
         rhs_label: 'Resultat',
         lhs_rhs_glue: '=',
         input_label: 'Tal',
+        entities_label: 'tal',
         load_label: 'Importera/Exportera',
         quiz_label: 'Test',
         is_bidirectional: false
@@ -146,6 +149,12 @@ var CORRECT_THRESHOLD = 2;
 
 var WORDS = new Array();
 var TEST_WORDS = new Array();
+
+var TEST_MODE_RANDOM_REMOVE_THRESHOLD = 1;
+var TEST_MODE_RANDOM_FOREVER = 2;
+var TEST_MODE_IN_ORDER = 3;
+
+var TEST_MODE = TEST_MODE_RANDOM_REMOVE_THRESHOLD;
 
 function addWord(lhs, rhs) {
     WORDS.push([lhs, rhs]);
@@ -174,14 +183,18 @@ function importWords(){
     showWordList();
 }
 
-function showRandomWord() {
+function showNextWord() {
     if (TEST_WORDS.length == 0) {
         $("#test_check_button").hide();
         $("#test_skip_button").hide();
         $("#id_test_result").html("Du klarade provet!");
         return;
     }
-    var index = Math.floor(Math.random() * TEST_WORDS.length);
+    var index = 0;
+    if (TEST_MODE == TEST_MODE_RANDOM_FOREVER ||
+        TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD) {
+        index = Math.floor(Math.random() * TEST_WORDS.length);
+    }
     var both = TEST_WORDS[index].words;
     var question = both[0];
     var solution = both[1];
@@ -220,10 +233,27 @@ function showWordList() {
     exportWords();
 }
 
+function updateScore() {
+    if (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD ||
+        TEST_MODE == TEST_MODE_IN_ORDER) {
+        var words_left = WORDS.length - TEST_WORDS.length;
+        $("#id_test_score").html(
+            TEST_WORDS.length + " av " + WORDS.length + " " +
+            CONFIG[CURRENT_MODE].entities_label + " kvar");
+    } else if (TEST_MODE == TEST_MODE_RANDOM_FOREVER) {
+        var score = 0;
+        for (var i = 0; i < TEST_WORDS.length; i++) {
+            score += TEST_WORDS[i].correct;
+        }
+        $("#id_test_score").html(score + " rätta svar");
+    }
+}
 
 function handleStartTest() {
     $("#id_start_test").hide();
     $("#id_test_mode").show();
+    $("#id_test_score").show();
+    $("#id_test_score").html("");
     $("#id_test_result").show();
     $("#id_test_result").html("");
     TEST_WORDS = new Array();
@@ -233,11 +263,13 @@ function handleStartTest() {
             correct: 0
         });
     }
-    showRandomWord();
+    updateScore();
+    showNextWord();
 }
 
 function handleStopTest() {
     $("#id_test_mode").hide();
+    $("#id_test_score").hide();
     $("#id_test_result").hide();
     $("#id_word_list").show();
     $("#id_start_test").show();
@@ -257,15 +289,21 @@ function handleTestCheck() {
         $("#test_answer").val("");
         return;
     }
-    if (++TEST_WORDS[index].correct >= CORRECT_THRESHOLD) {
+
+    ++TEST_WORDS[index].correct;
+
+    if (TEST_MODE == TEST_MODE_IN_ORDER ||
+        (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD &&
+         TEST_WORDS[index].correct >= CORRECT_THRESHOLD)) {
         TEST_WORDS.splice(index, 1);
     }
     $("#id_test_result").html("Rätt!");
-    showRandomWord();
+    updateScore();
+    showNextWord();
 }
 
 function handleTestSkip() {
-    showRandomWord();
+    showNextWord();
 }
 
 function handleSelectMode() {
@@ -296,6 +334,7 @@ function onLoad() {
     $("#removeAll").hide();
 
     $("#id_test_mode").hide();
+    $("#id_test_score").hide();
     $("#id_test_result").hide();
 
     $( "#id_add_word_form" ).submit(function( e ) {
@@ -404,6 +443,7 @@ $(document).ready(function() {
 
                     <input type="submit" value="Hoppa över" onClick="handleTestSkip()" id="test_skip_button">
                     <input type="submit" value="Avsluta test" onClick="handleStopTest()" id="test_end_button">
+                    <h3 id="id_test_score"></h3>
                     <h3 id="id_test_result"></h3>
                 </div>
            </div>
