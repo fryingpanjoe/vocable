@@ -149,7 +149,6 @@ var TEST_WORDS = new Array();
 
 function addWord(lhs, rhs) {
     WORDS.push([lhs, rhs]);
-    exportWords();
 }
 
 function exportWords(){
@@ -203,7 +202,7 @@ function showWordList() {
 
     for (var i = 0; i < WORDS.length; i++) {
         var item = $('<tr data-id="'+i+'"></tr>');
-        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + '</td><td><a href="#" class="remove">[x]</a></td>');
+        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + '</td><td><a href="#" class="remove">x</a></td>');
         list.append(item);
     }
     $(".remove").click(function(e){
@@ -212,6 +211,13 @@ function showWordList() {
        WORDS.splice(id, 1);
        showWordList();
     });
+    
+    if(WORDS.length > 0){
+        $("#removeAll").show();
+    }else{
+        $("#removeAll").hide();
+    }
+    exportWords();
 }
 
 
@@ -287,6 +293,8 @@ function handleFileSelect(evt) {
 function onLoad() {
     $("#id_show_words_button").hide();
 
+    $("#removeAll").hide();
+
     $("#id_test_mode").hide();
     $("#id_test_result").hide();
 
@@ -303,6 +311,11 @@ function onLoad() {
         }
         e.returnValue = false;
         if(e.preventDefault) e.preventDefault();
+    });
+    
+    $("#removeAll").click( function(){
+        WORDS = new Array();
+        showWordList();
     });
 
     $( "#id_test_form" ).submit(function( e ) {
@@ -371,6 +384,7 @@ $(document).ready(function() {
                             </thead>
                             <tbody id="id_word_list_table"></tbody>
                         </table>
+                        <button id="removeAll">Ta bort alla</button> 
                     </form>
                 </div>
            </div>
