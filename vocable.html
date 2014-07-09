@@ -256,6 +256,8 @@ function handleStartTest() {
     $("#id_test_score").html("");
     $("#id_test_result").show();
     $("#id_test_result").html("");
+    $("#test_check_button").show();
+    $("#test_skip_button").show();
     TEST_WORDS = new Array();
     for (var i = 0; i < WORDS.length; i++) {
         TEST_WORDS.push({
@@ -273,6 +275,8 @@ function handleStopTest() {
     $("#id_test_result").hide();
     $("#id_word_list").show();
     $("#id_start_test").show();
+    $("#test_check_button").hide();
+    $("#test_skip_button").hide();
 
     $('[name="word"]').focus();
 }
