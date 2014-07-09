@@ -202,11 +202,15 @@ function showWordList() {
     list.html('');
 
     for (var i = 0; i < WORDS.length; i++) {
-        var item = $("<tr></tr>");
-        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + "</td>");
+        var item = $('<tr data-id="'+i+'"></tr>');
+        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + '</td><td><a href="#" class="remove">[x]</a></td>');
         list.append(item);
     }
+    $(".remove").click(function(e){
+       
+    });
 }
+
 
 function handleStartTest() {
     $("#id_start_test").hide();
