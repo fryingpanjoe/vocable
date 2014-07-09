@@ -298,10 +298,13 @@ function handleTestCheck() {
     if (answer != solution) {
         $("#id_test_result").html("Fel!");
         $("#test_answer").val("");
+        if (TEST_WORDS[index].correct > 0) {
+            --TEST_WORDS[index].correct;
+        }
         return;
+    } else {
+        ++TEST_WORDS[index].correct;
     }
-
-    ++TEST_WORDS[index].correct;
 
     if (TEST_MODE == TEST_MODE_IN_ORDER ||
         (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD &&
