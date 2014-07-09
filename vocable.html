@@ -359,6 +359,7 @@ function handleSelectMode() {
 }
 
 function handleFileSelect(evt) {
+        $("#id_import_textarea").val('');
 	var files = evt.target.files;
 	// Import each files content to the textarea
 	for (var i = 0, f; f = files[i]; i++) {
