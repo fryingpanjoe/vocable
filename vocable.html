@@ -190,10 +190,17 @@ function showNextWord() {
         $("#id_test_result").html("Du klarade provet!");
         return;
     }
+    var lastindex = $("#test_index").val();
     var index = 0;
     if (TEST_MODE == TEST_MODE_RANDOM_FOREVER ||
         TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD) {
-        index = Math.floor(Math.random() * TEST_WORDS.length);
+        var attempts = 100;
+        while (--attempts > 0) {
+            index = Math.floor(Math.random() * TEST_WORDS.length);
+            if (TEST_WORDS.length == 1 || index != lastindex) {
+                break;
+            }
+        }
     }
     var both = TEST_WORDS[index].words;
     var question = both[0];
