@@ -367,9 +367,8 @@ function handleFileSelect(evt) {
 
 		reader.onload = (function(theFile) {
 			return function(e) {
-			  
 			  $('#id_import_textarea').val($('#id_import_textarea').val()+e.target.result);
-                          importWords();
+              importWords();
 			};
 		})(f);		
 		reader.readAsText(f);
