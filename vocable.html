@@ -363,17 +363,16 @@ function handleFileSelect(evt) {
 	// Import each files content to the textarea
 	for (var i = 0, f; f = files[i]; i++) {
 		var reader = new FileReader();
-		console.log(f);
 
 		reader.onload = (function(theFile) {
 			return function(e) {
-			  $('#id_import_textarea').val($('#id_import_textarea').val()+e.target.result);
+			  $("#id_import_textarea").val($("#id_import_textarea").val()+e.target.result);
               importWords();
 			};
 		})(f);		
 		reader.readAsText(f);
 	}
-	
+	$("#files").val('');
 }
 
 function onLoad() {
