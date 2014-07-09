@@ -202,7 +202,7 @@ function showWordList() {
 
     for (var i = 0; i < WORDS.length; i++) {
         var item = $('<tr data-id="'+i+'"></tr>');
-        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + '</td><td><a href="#" class="remove">x</a></td>');
+        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + '</td><td><button href="#" class="remove">&#215;</button></td>');
         list.append(item);
     }
     $(".remove").click(function(e){
