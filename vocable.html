@@ -166,6 +166,9 @@ var TEST_MODE_RANDOM_REMOVE_THRESHOLD = 1;
 var TEST_MODE_RANDOM_FOREVER = 2;
 var TEST_MODE_IN_ORDER = 3;
 
+// decrement correct counter on fail
+var TEST_DECREMENT_ON_FAIL = false;
+
 var TEST_MODE = TEST_MODE_RANDOM_REMOVE_THRESHOLD;
 
 function addWord(lhs, rhs) {
@@ -258,8 +261,15 @@ function showWordList() {
 }
 
 function updateScore() {
-    if (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD ||
-        TEST_MODE == TEST_MODE_IN_ORDER) {
+    if (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD) {
+        var total_answers = WORDS.length * CORRECT_THRESHOLD;
+        var correct_answers = (WORDS.length - TEST_WORDS.length) * CORRECT_THRESHOLD;
+        for (var i = 0; i < TEST_WORDS.length; i++) {
+            correct_answers += TEST_WORDS[i].correct;
+        }
+        $("#id_test_score").html(
+            correct_answers + " av " + total_answers + " rätt.");
+    } else if (TEST_MODE == TEST_MODE_IN_ORDER) {
         var words_left = WORDS.length - TEST_WORDS.length;
         $("#id_test_score").html(
             TEST_WORDS.length + " av " + WORDS.length + " " +
@@ -314,23 +324,31 @@ function handleTestCheck() {
     var index = $("#test_index").val();
     if (answer != solution) {
         $("#id_test_result").html("Fel!");
-        $("#test_answer").val("");
-        if (TEST_WORDS[index].correct > 0) {
+        // decrement correct counter if set to
+        if (TEST_DECREMENT_ON_FAIL && TEST_WORDS[index].correct > 0) {
             --TEST_WORDS[index].correct;
         }
-        return;
+        // show next word if we're going in random order
+        if (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD ||
+            TEST_MODE == TEST_MODE_RANDOM_FOREVER) {
+            showNextWord();
+        } else {
+            // otherwise just clear the input and let the user try again
+            $("#test_answer").val("");
+        }
     } else {
+        $("#id_test_result").html("Rätt!");
         ++TEST_WORDS[index].correct;
+        // remove correctly answered questions if we're going in-order or
+        // random with threshold
+        if (TEST_MODE == TEST_MODE_IN_ORDER ||
+            (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD &&
+             TEST_WORDS[index].correct >= CORRECT_THRESHOLD)) {
+            TEST_WORDS.splice(index, 1);
+        }
+        showNextWord();
     }
-
-    if (TEST_MODE == TEST_MODE_IN_ORDER ||
-        (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD &&
-         TEST_WORDS[index].correct >= CORRECT_THRESHOLD)) {
-        TEST_WORDS.splice(index, 1);
-    }
-    $("#id_test_result").html("Rätt!");
     updateScore();
-    showNextWord();
 }
 
 function handleTestSkip() {
