@@ -273,7 +273,7 @@ function updateScore() {
         var words_left = WORDS.length - TEST_WORDS.length;
         $("#id_test_score").html(
             TEST_WORDS.length + " av " + WORDS.length + " " +
-            CONFIG[CURRENT_MODE].entities_label + " kvar");
+            CONFIG[CURRENT_MODE].entities_label + " kvar.");
     } else if (TEST_MODE == TEST_MODE_RANDOM_FOREVER) {
         var score = 0;
         for (var i = 0; i < TEST_WORDS.length; i++) {
