@@ -8,78 +8,7 @@ th{text-align: left;}
 tbody td{
     border:1px solid black;
 }
-ul.tabs {
-float:left;
-list-style:none;
-height:32px;
-width:100%;
-border-radius:8px 0 -50px 0;
-margin:0;
-padding:0;
-}
 
-ul.tabs li {
-float:left;
-height:31px;
-line-height:31px;
-border:1px solid #999;
-overflow:hidden;
-position:relative;
-background:#e0e0e0;
--webkit-border-top-left-radius:8px;
--webkit-border-top-right-radius:8px;
--moz-border-radius-topleft:8px;
--moz-border-radius-topright:8px;
-border-top-left-radius:8px;
-border-top-right-radius:8px;
-margin:0 5px -1px 0;
-padding:0;
-}
-
-ul.tabs li a {
-text-decoration:none;
-color:#000;
-display:block;
-font-size:1.2em;
-border:1px solid #fff;
-outline:none;
--webkit-border-top-left-radius:8px;
--webkit-border-top-right-radius:8px;
--moz-border-radius-topleft:8px;
--moz-border-radius-topright:8px;
-border-top-left-radius:8px;
-border-top-right-radius:8px;
-padding:0 20px;
-}
-
-ul.tabs li a:hover {
-background:#ccc;
-}
-
-html ul.tabs li.active,html ul.tabs li.active a:hover {
-background:#fff;
-border-bottom:1px solid #fff;
-}
-
-.tabContainer {
-border:1px solid #999;
-overflow:hidden;
-clear:both;
-float:left;
-width:100%;
-background:#fff;
--webkit-border-radius:8px;
--webkit-border-top-left-radius:0;
--moz-border-radius:8px;
--moz-border-radius-topleft:0;
-border-radius:8px;
-border-top-left-radius:0;
-}
-
-.tabContent {
-font-size: 12px;
-padding:20px;
-}
 
 .word_list_table td{
 border: 0;
@@ -285,6 +214,8 @@ function updateScore() {
 }
 
 function handleStartTest() {
+    $("#quiz").show();
+    $("#input").hide();
     $("#id_start_test").hide();
     $("#id_test_mode").show();
     $("#id_test_score").show();
@@ -305,6 +236,8 @@ function handleStartTest() {
 }
 
 function handleStopTest() {
+    $("#quiz").hide();
+    $("#input").show();
     $("#id_test_mode").hide();
     $("#id_test_score").hide();
     $("#id_test_result").hide();
@@ -457,62 +390,51 @@ $(document).ready(function() {
         </select>
     </div>
     <div id="content">
-        <ul class="tabs">
-           <li><a href="#input" class="flux" id="input_label">Inmatning</a></li>
-           <li><a href="#quiz" class="flux" id="quiz_label">Quiz</a></li>
-           <!-- <li><a href="#load" class="flux" id="load_label">Spara/öppna</a></li> -->
-        </ul>
-        <div class="tabContainer">
-           <div id="input" class="tabContent">
-                <input type="file" id="files" name="files[]" style="display:none;" multiple />
-                <button id="fileSelect" onclick="$('#files').click();">Öppna</button>
-                <input type="button" value="Spara" onClick="saveList()"><br/>               
+        <div id="input" class="tabContent">
+             <input type="file" id="files" name="files[]" style="display:none;" multiple />
+             <button id="fileSelect" onclick="$('#files').click();">Öppna</button>
+             <input type="button" value="Spara" onClick="saveList()"> |                
+             <input id="id_start_test" type="submit" value="Starta quiz" onClick="handleStartTest()">
 
-               
-                <div id="id_word_list">
-                    <form id="id_add_word_form">
-                        <table class="word_list_table">
-                            <thead>
-                                <tr><th><span class="flux" id="lhs_label">Fråga</span><br /><input type="text" name="word"></th>
-                                    <th><br /></th><th><span class="flux" id="rhs_label">Svar</span><br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
-                            </thead>
-                            <tbody id="id_word_list_table"></tbody>
-                        </table>
-                        <button id="removeAll">Ta bort alla</button> 
-                    </form>
-                </div>
-           </div>
+             <div id="id_word_list">
+                 <form id="id_add_word_form">
+                     <table class="word_list_table">
+                         <thead>
+                             <tr><th><span class="flux" id="lhs_label">Fråga</span><br /><input type="text" name="word"></th>
+                                 <th><br /></th><th><span class="flux" id="rhs_label">Svar</span><br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th></tr>
+                         </thead>
+                         <tbody id="id_word_list_table"></tbody>
+                     </table>
+                     <button id="removeAll">Ta bort alla</button> 
+                 </form>
+             </div>
+        </div>
 
-           <div id="quiz" class="tabContent">
-               <div id="id_start_test">
-                    <input type="submit" value="Starta quiz" onClick="handleStartTest()">
-                </div>
-                <div id="id_test_mode">
-                    <form id="id_test_form">
-                        <span id="id_question"></span><br />
-                        <input type="text" name="test_answer" id="test_answer">
-                        <input type="hidden" name="test_solution" id="test_solution">
-                        <input type="submit" value="Rätta" id="test_check_button">
-                    </form>
-                    <input type="hidden" name="test_index" id="test_index">
+        <div id="quiz" class="tabContent">
+             <div id="id_test_mode">
+                 <form id="id_test_form">
+                     <span id="id_question"></span><br />
+                     <input type="text" name="test_answer" id="test_answer">
+                     <input type="hidden" name="test_solution" id="test_solution">
+                     <input type="submit" value="Rätta" id="test_check_button">
+                 </form>
+                 <input type="hidden" name="test_index" id="test_index">
 
-                    <input type="submit" value="Hoppa över" onClick="handleTestSkip()" id="test_skip_button">
-                    <input type="submit" value="Avsluta test" onClick="handleStopTest()" id="test_end_button">
-                    <h3 id="id_test_score"></h3>
-                    <h3 id="id_test_result"></h3>
-                </div>
-           </div>
+                 <input type="submit" value="Hoppa över" onClick="handleTestSkip()" id="test_skip_button">
+                 <input type="submit" value="Avsluta test" onClick="handleStopTest()" id="test_end_button">
+                 <h3 id="id_test_score"></h3>
+                 <h3 id="id_test_result"></h3>
+             </div>
+        </div>
 
-           
-           <div id="load" class="tabContent" style="display: none;">
-                <form id="id_import_form">
-                    <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
-					
-		    <input type="file" id="files" name="files[]" multiple /><br />
-                    <input type="button" value="Spara" onClick="saveList()">
-                </form>
-           </div>
-           
+
+        <div id="load" class="tabContent" style="display: none;">
+             <form id="id_import_form">
+                 <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
+
+                 <input type="file" id="files" name="files[]" multiple /><br />
+                 <input type="button" value="Spara" onClick="saveList()">
+             </form>
         </div>
     </div>
 </body>
