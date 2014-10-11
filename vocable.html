@@ -190,6 +190,7 @@ function saveList(){
 
 function importWords(){
     var temp = $("#id_import_textarea").val();
+    console.log(temp);
     var rows = temp.split("\n");
 
     var result = new Array();
@@ -367,13 +368,14 @@ function handleFileSelect(evt) {
 
 		reader.onload = (function(theFile) {
 			return function(e) {
-			  $("#id_import_textarea").val($("#id_import_textarea").val()+e.target.result);
-              importWords();
+			  $("#id_import_textarea").val($("#id_import_textarea").val()+e.target.result);   
+                          importWords();
 			};
 		})(f);		
 		reader.readAsText(f);
 	}
 	$("#files").val('');
+        
 }
 
 function onLoad() {
@@ -458,10 +460,15 @@ $(document).ready(function() {
         <ul class="tabs">
            <li><a href="#input" class="flux" id="input_label">Inmatning</a></li>
            <li><a href="#quiz" class="flux" id="quiz_label">Quiz</a></li>
-           <li><a href="#load" class="flux" id="load_label">Importera/exportera</a></li>
+           <!-- <li><a href="#load" class="flux" id="load_label">Spara/öppna</a></li> -->
         </ul>
         <div class="tabContainer">
            <div id="input" class="tabContent">
+                <input type="file" id="files" name="files[]" style="display:none;" multiple />
+                <button id="fileSelect" onclick="$('#files').click();">Öppna</button>
+                <input type="button" value="Spara" onClick="saveList()"><br/>               
+
+               
                 <div id="id_word_list">
                     <form id="id_add_word_form">
                         <table class="word_list_table">
@@ -496,14 +503,16 @@ $(document).ready(function() {
                 </div>
            </div>
 
-           <div id="load" class="tabContent">
+           
+           <div id="load" class="tabContent" style="display: none;">
                 <form id="id_import_form">
                     <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
 					
 		    <input type="file" id="files" name="files[]" multiple /><br />
-                    <input type="button" value="Exportera" onClick="saveList()">
+                    <input type="button" value="Spara" onClick="saveList()">
                 </form>
            </div>
+           
         </div>
     </div>
 </body>
