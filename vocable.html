@@ -76,6 +76,21 @@ tbody td{
     top:1px;
 }
 
+@media print {
+    #toolbar{
+        display:none;
+    }
+    
+    button{
+        display:none!important;
+    }
+    
+    .word_list_table input{
+        display:none;
+    }
+}
+
+
 </style>
 <script type="text/javascript" charset="UTF-8">
 /*! jQuery v1.11.0 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
@@ -450,7 +465,8 @@ $(document).ready(function() {
             <div id="toolbar">
                 <input type="file" id="files" name="files[]" style="display:none;" multiple />
                 <a id="fileSelect" class="button" onclick="$('#files').click();">Öppna</a>
-                <a class="button" onClick="saveList()">Spara</a>                
+                <a class="button" onClick="saveList()">Spara</a>         
+                <a class="button" onClick="window.print();">Skriv ut</a>
                 <a id="id_start_test" class="button" onClick="handleStartTest()">Starta quiz</a>
                 <span>Mode:</span>
                 <select id="mode_select" style="font-size: 18px;">
