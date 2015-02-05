@@ -76,6 +76,8 @@ tbody td{
     top:1px;
 }
 
+
+
 @media print {
     #toolbar{
         display:none;
@@ -88,6 +90,10 @@ tbody td{
     .word_list_table input{
         display:none;
     }
+    
+    td {
+        border-bottom: 1px solid gray!important;
+    }    
 }
 
 
@@ -484,7 +490,8 @@ $(document).ready(function() {
                                  <th><br /></th><th><span class="flux" id="rhs_label">Svar</span><br /><input type="text" name="translation"> <input type="submit" value="Lägg till"></th>
                              </tr>
                          </thead>
-                         <tbody id="id_word_list_table"></tbody>
+                         <tbody id="id_word_list_table">
+                         </tbody>
                      </table>
                      <button id="removeAll">Ta bort alla</button> 
                  </form>
