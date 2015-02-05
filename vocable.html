@@ -1,5 +1,6 @@
 <html>
 <head>
+    <title>Krimilingo</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
 *{font-family: Arial, sans-serif;}
@@ -90,10 +91,23 @@ tbody td{
     .word_list_table input{
         display:none;
     }
+    table{
+        border-collapse: collapse;
+    }
+
+    tbody td, tr {
+        border-bottom: 1px solid gray;
+        padding-left:5px;
+        padding-right:5px;
+    }  
     
-    td {
-        border-bottom: 1px solid gray!important;
-    }    
+    tbody tr .flux{
+        border: 1px solid gray;
+        border-bottom: none;
+    }
+    tbody .actions{
+        border: none!important;
+    }
 }
 
 
@@ -256,7 +270,7 @@ function showWordList() {
 
     for (var i = 0; i < WORDS.length; i++) {
         var item = $('<tr data-id="'+i+'"></tr>');
-        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + '</td><td><button href="#" class="remove">&#215;</button></td>');
+        item.append("<td>" + WORDS[i][0] + "</td><td class=\"flux\" id=\"lhs_rhs_glue\">" + CONFIG[CURRENT_MODE].lhs_rhs_glue + "</td><td>" + WORDS[i][1] + '</td><td class="actions"><button href="#" class="remove">&#215;</button></td>');
         list.append(item);
     }
     $(".remove").click(function(e){
@@ -379,11 +393,15 @@ function handleSelectMode() {
 function handleFileSelect(evt) {
         $("#id_import_textarea").val('');
 	var files = evt.target.files;
+        
+        var title ="";
+        
 	// Import each files content to the textarea
 	for (var i = 0, f; f = files[i]; i++) {
 		var reader = new FileReader();
 
 		reader.onload = (function(theFile) {
+                        title += theFile.name.substring(0, theFile.name.length-4);
 			return function(e) {
 			  $("#id_import_textarea").val($("#id_import_textarea").val()+e.target.result);   
                           importWords();
@@ -391,8 +409,12 @@ function handleFileSelect(evt) {
 		})(f);		
 		reader.readAsText(f);
 	}
-	$("#files").val('');
         
+        //set the title from the filename(s)
+        $(".title").html(title);
+        document.title = title;
+        
+	$("#files").val('');
 }
 
 function onLoad() {
