@@ -230,6 +230,14 @@ function importWords(){
     showWordList();
 }
 
+function splitAndTrimWordList(text) {
+    var words = text.trim().split(',');
+    for (var i in words) {
+        words[i] = words[i].trim();
+    }
+    return words;
+}
+
 function showNextWord() {
     if (TEST_WORDS.length == 0) {
         $("#test_check_button").hide();
@@ -250,14 +258,15 @@ function showNextWord() {
         }
     }
     var both = TEST_WORDS[index].words;
-    var question = both[0];
-    var solution = both[1];
+    var question_words = splitAndTrimWordList(both[0]);
+    var solution_words = splitAndTrimWordList(both[1]);
     if (CONFIG[CURRENT_MODE].is_bidirectional && Math.random() < 0.5) {
-        question = both[1];
-        solution = both[0];
+        var temp = question_words;
+        question_words = solution_words;
+        solution_words = temp;
     }
-    $('#id_question').html(question);
-    $('#test_solution').val(solution);
+    $('#id_question').html(question_words.join(", "));
+    $('#test_solution').val(solution_words.join(","));
     $('#test_answer').val("");
     $('#test_answer').focus();
     $('#test_index').val(index);
@@ -349,10 +358,17 @@ function handleTestCheck() {
     if (TEST_WORDS.length == 0) {
         return;
     }
-    var answer = $.trim($("#test_answer").val().toLowerCase());
-    var solution = $.trim($("#test_solution").val().toLowerCase());
+    var answers = splitAndTrimWordList($.trim($("#test_answer").val().toLowerCase()));
+    var solutions = splitAndTrimWordList($.trim($("#test_solution").val().toLowerCase()));
     var index = $("#test_index").val();
-    if (answer != solution) {
+    // check answer (can be comma separated array)
+    var is_correct = answers.length > 0;
+    for (var i in answers) {
+        if (solutions.indexOf(answers[i]) < 0) {
+            is_correct = false;
+        }
+    }
+    if (!is_correct) {
         $("#id_test_result").html("Fel!");
         // decrement correct counter if set to
         if (TEST_DECREMENT_ON_FAIL && TEST_WORDS[index].correct > 0) {
