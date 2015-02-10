@@ -217,7 +217,6 @@ function saveList(){
 
 function importWords(){
     var temp = $("#id_import_textarea").val();
-    console.log(temp);
     var rows = temp.split("\n");
 
     var result = new Array();
@@ -275,7 +274,6 @@ function showWordList() {
     }
     $(".remove").click(function(e){
        var id = $(e.target).parent().parent().attr('data-id');
-       console.log(id);
        WORDS.splice(id, 1);
        showWordList();
     });
