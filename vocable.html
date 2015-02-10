@@ -238,14 +238,14 @@ function showNextWord() {
         $("#id_test_result").html("Du klarade provet!");
         return;
     }
-    var lastindex = $("#test_index").val();
+    var last_index = $("#test_index").val();
     var index = 0;
     if (TEST_MODE == TEST_MODE_RANDOM_FOREVER ||
         TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD) {
         var attempts = 100;
         while (--attempts > 0) {
             index = Math.floor(Math.random() * TEST_WORDS.length);
-            if (TEST_WORDS.length == 1 || index != lastindex) {
+            if (TEST_WORDS.length == 1 || index != last_index) {
                 break;
             }
         }
