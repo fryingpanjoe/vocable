@@ -1,4 +1,4 @@
-﻿var MODE_QUIZ = 'quiz';
+var MODE_QUIZ = 'quiz';
 var MODE_LANG = 'lang';
 var MODE_MATH = 'math';
 
