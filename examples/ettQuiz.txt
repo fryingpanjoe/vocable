@@ -1,0 +1,6 @@
+#mode=quiz
+Vem spelar Batman bäst?:Adam West
+Vad är kvadroten ur 361?:19
+Vilken stad i småland har flest invånare?:Jönköping
+Vilket trädslag är det i glasspinnar?:Bok
+På vilken dansk ö ligger staden Odense?:Fyn
