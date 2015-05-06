@@ -1,14 +1,14 @@
-var MODE_QUIZ = 'quiz';
+ï»¿var MODE_QUIZ = 'quiz';
 var MODE_LANG = 'lang';
 var MODE_MATH = 'math';
 
 var CONFIG = {
     'quiz': {
-        lhs_label: 'Fråga',
+        lhs_label: 'FrÃ¥ga',
         rhs_label: 'Svar',
         lhs_rhs_glue: '',
-        input_label: 'Frågor',
-        entities_label: 'frågor',
+        input_label: 'FrÃ¥gor',
+        entities_label: 'frÃ¥gor',
         load_label: 'Importera/Exportera',
         quiz_label: 'Quiz',
         is_bidirectional: false
@@ -33,7 +33,7 @@ var CONFIG = {
         quiz_label: 'Test',
         is_bidirectional: false
     }
-}
+};
 
 var CURRENT_MODE = MODE_QUIZ;
 
@@ -75,7 +75,7 @@ function importWords(){
     var result = new Array();
     for(var i = 0; i < rows.length; i++){
         var cols = $.trim(rows[i]).split(':');
-        if(cols[0] != undefined && cols[1] != undefined){
+        if(cols[0] !== undefined && cols[1] !== undefined){
             result.push(cols);
         }
     }
@@ -92,7 +92,7 @@ function splitAndTrimWordList(text) {
 }
 
 function showNextWord() {
-    if (TEST_WORDS.length == 0) {
+    if (TEST_WORDS.length === 0) {
         $("#test_check_button").hide();
         $("#test_skip_button").hide();
         $("#id_test_result").html("Du klarade provet!");
@@ -156,7 +156,7 @@ function updateScore() {
             correct_answers += TEST_WORDS[i].correct;
         }
         $("#id_test_score").html(
-            correct_answers + " av " + total_answers + " rätt.");
+            correct_answers + " av " + total_answers + " rÃ¤tt.");
     } else if (TEST_MODE == TEST_MODE_IN_ORDER) {
         var words_left = WORDS.length - TEST_WORDS.length;
         $("#id_test_score").html(
@@ -167,7 +167,7 @@ function updateScore() {
         for (var i = 0; i < TEST_WORDS.length; i++) {
             score += TEST_WORDS[i].correct;
         }
-        $("#id_test_score").html(score + " rätta svar");
+        $("#id_test_score").html(score + " rÃ¤tta svar");
     }
 }
 
@@ -236,7 +236,7 @@ function handleTestCheck() {
             $("#test_answer").val("");
         }
     } else {
-        $("#id_test_result").html("Rätt!");
+        $("#id_test_result").html("RÃ¤tt!");
         ++TEST_WORDS[index].correct;
         // remove correctly answered questions if we're going in-order or
         // random with threshold
