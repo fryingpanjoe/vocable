@@ -198,7 +198,7 @@ function setMode(mode){
     CURRENT_MODE = mode;
     $('.flux').each(function(index) {
         this.innerHTML = CONFIG[CURRENT_MODE][this.id];
-    });    
+    });
 }
 
 $(document).ready(function() {
