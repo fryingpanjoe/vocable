@@ -7,6 +7,7 @@ function exportWords(){
 }
 
 function saveList(){
+    exportWords();
     var blob = new Blob([$("#id_import_textarea").val()], {type: "text/plain;charset=utf-8"});
     saveAs(blob, prompt("Filnamn", "krimilingo.txt"));
 }
