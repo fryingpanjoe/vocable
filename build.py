@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Build script
+# ------------
+# Takes all external css and js-files in one html-file.
+
 import os;
-#Build script
-#takes all external css and js-files in one html-file
 
 INPUT='vocable.html'
 OUTPUT='build/vocable.html'
