@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os;
 #Build script
 #takes all external css and js-files in one html-file
