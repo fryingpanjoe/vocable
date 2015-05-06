@@ -1,3 +1,4 @@
+#mode=lang
 dog:hund
 cat:katt
 thing:sak
