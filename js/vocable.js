@@ -2,39 +2,6 @@
 var MODE_LANG = 'lang';
 var MODE_MATH = 'math';
 
-var CONFIG = {
-    'quiz': {
-        lhs_label: 'Fråga',
-        rhs_label: 'Svar',
-        lhs_rhs_glue: '',
-        input_label: 'Frågor',
-        entities_label: 'frågor',
-        load_label: 'Importera/Exportera',
-        quiz_label: 'Quiz',
-        is_bidirectional: false
-    },
-    'lang': {
-        lhs_label: 'Ord',
-        rhs_label: 'Betydelse',
-        lhs_rhs_glue: '',
-        input_label: 'Glosor',
-        entities_label: 'glosor',
-        load_label: 'Importera/Exportera',
-        quiz_label: 'Glosprov',
-        is_bidirectional: true
-    },
-    'math': {
-        lhs_label: 'Tal',
-        rhs_label: 'Resultat',
-        lhs_rhs_glue: '=',
-        input_label: 'Tal',
-        entities_label: 'tal',
-        load_label: 'Importera/Exportera',
-        quiz_label: 'Test',
-        is_bidirectional: false
-    }
-};
-
 var CURRENT_MODE = MODE_QUIZ;
 
 var CORRECT_THRESHOLD = 2;
@@ -53,49 +20,6 @@ var TEST_MODE = TEST_MODE_RANDOM_REMOVE_THRESHOLD;
 
 function addWord(lhs, rhs) {
     WORDS.push([lhs, rhs]);
-}
-
-function exportWords(){
-    var output= '#mode=' + CURRENT_MODE + "\n";
-    for(var i = 0; i < WORDS.length; i++){
-        output += WORDS[i][0]+':'+WORDS[i][1]+"\n";
-    }
-    $("#id_import_textarea").val(output);
-}
-
-function saveList(){
-    var blob = new Blob([$("#id_import_textarea").val()], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, prompt("Filnamn", "krimilingo.txt"));
-}
-
-function importWords(){
-    var temp = $("#id_import_textarea").val();
-    var rows = temp.split("\n");
-
-    var result = new Array();
-    for(var i = 0; i < rows.length; i++){
-        if(rows[i].charAt(0) === '#'){
-            handleFileHeader(rows[i]);
-        }else{
-            var cols = $.trim(rows[i]).split(':');
-            if(cols[0] !== undefined && cols[1] !== undefined){
-                result.push(cols);
-            }
-        }
-    }
-    WORDS = result;
-    showWordList();
-}
-
-function handleFileHeader(row){
-    var cols = $.trim(row).substring(1).split('=');
-    if(cols[0] !== undefined && cols[1] !== undefined){
-        switch(cols[0]){
-            case 'mode':
-                setMode(cols[1]);
-                break;
-        }
-    }
 }
 
 function splitAndTrimWordList(text) {
@@ -269,33 +193,6 @@ function handleTestSkip() {
     showNextWord();
 }
 
-function handleFileSelect(evt) {
-    $("#id_import_textarea").val('');
-    var files = evt.target.files;
-
-    var title = "";
-
-    // Import each files content to the textarea
-    for (var i = 0, f; f = files[i]; i++) {
-        var reader = new FileReader();
-
-        reader.onload = (function (theFile) {
-            title += theFile.name.substring(0, theFile.name.length - 4);
-            return function (e) {
-                $("#id_import_textarea").val($("#id_import_textarea").val() + e.target.result);
-                importWords();
-            };
-        })(f);
-        reader.readAsText(f);
-    }
-
-    //set the title from the filename(s)
-    $(".title").html(title);
-    document.title = title;
-
-    $("#files").val('');
-}
-
 function setMode(mode){
     $("#mode_select").val(mode);
     CURRENT_MODE = mode;
@@ -306,9 +203,7 @@ function setMode(mode){
 
 $(document).ready(function() {
     $("#id_show_words_button").hide();
-
     $("#removeAll").hide();
-
     $("#id_test_mode").hide();
     $("#id_test_score").hide();
     $("#id_test_result").hide();
