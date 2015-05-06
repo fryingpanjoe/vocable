@@ -1,5 +1,9 @@
+import os;
 INPUT='vocable.html'
-OUTPUT='build.html'
+OUTPUT='build/vocable.html'
+
+if not os.path.exists('build'):
+  os.makedirs('build')
 
 file = open(OUTPUT, "w")
 
