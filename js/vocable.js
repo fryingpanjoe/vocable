@@ -146,7 +146,7 @@ function handleStopTest() {
     $('[name="word"]').focus();
 }
 
-function checkAnswers(answers, solutions) {
+function checkAnswersWithSpelling(answers, solutions) {
     for (var i in answers) {
         for (var j in solutions) {
             if (spellScore(answers[i], solutions[j]) <= 1) {
@@ -157,6 +157,15 @@ function checkAnswers(answers, solutions) {
     return false;
 }
 
+function checkAnswers(answers, solutions) {
+    for (var i in answers) {
+        if (solutions.indexOf(answers[i]) < 0) {
+            return false;
+        }
+    }
+    return answers.length > 0;
+}
+
 function handleTestCheck() {
     if (TEST_WORDS.length == 0) {
         return;
@@ -165,7 +174,9 @@ function handleTestCheck() {
     var solutions = splitAndTrimWordList($.trim($("#test_solution").val().toLowerCase()));
     var index = $("#test_index").val();
     // check answer (can be comma separated array)
-    var is_correct = checkAnswers(answers, solutions);
+    var is_correct = CURRENT_MODE == MODE_LANG ?
+        checkAnswersWithSpelling(answers, solutions) :
+        checkAnswers(answers, solutions);
     if (!is_correct) {
         $("#id_test_result").html("Fel!");
         // decrement correct counter if set to
