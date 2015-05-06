@@ -269,9 +269,6 @@ function handleTestSkip() {
     showNextWord();
 }
 
-function handleSelectMode() {
-}
-
 function handleFileSelect(evt) {
     $("#id_import_textarea").val('');
     var files = evt.target.files;
@@ -307,7 +304,7 @@ function setMode(mode){
     });    
 }
 
-function onLoad() {
+$(document).ready(function() {
     $("#id_show_words_button").hide();
 
     $("#removeAll").hide();
@@ -343,8 +340,7 @@ function onLoad() {
     });
 
     $('[name="word"]').focus();
-}
-$(document).ready(function() {
+
     //hiding tab content except first one
     $(".tabContent").not(":first").hide();
     // adding Active class to first selected tab and show
