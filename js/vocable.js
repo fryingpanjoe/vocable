@@ -56,7 +56,7 @@ function addWord(lhs, rhs) {
 }
 
 function exportWords(){
-    var output= '';
+    var output= '#mode=' + CURRENT_MODE + "\n";
     for(var i = 0; i < WORDS.length; i++){
         output += WORDS[i][0]+':'+WORDS[i][1]+"\n";
     }
@@ -74,13 +74,28 @@ function importWords(){
 
     var result = new Array();
     for(var i = 0; i < rows.length; i++){
-        var cols = $.trim(rows[i]).split(':');
-        if(cols[0] !== undefined && cols[1] !== undefined){
-            result.push(cols);
+        if(rows[i].charAt(0) === '#'){
+            handleFileHeader(rows[i]);
+        }else{
+            var cols = $.trim(rows[i]).split(':');
+            if(cols[0] !== undefined && cols[1] !== undefined){
+                result.push(cols);
+            }
         }
     }
     WORDS = result;
     showWordList();
+}
+
+function handleFileHeader(row){
+    var cols = $.trim(row).substring(1).split('=');
+    if(cols[0] !== undefined && cols[1] !== undefined){
+        switch(cols[0]){
+            case 'mode':
+                setMode(cols[1]);
+                break;
+        }
+    }
 }
 
 function splitAndTrimWordList(text) {
@@ -258,30 +273,38 @@ function handleSelectMode() {
 }
 
 function handleFileSelect(evt) {
-        $("#id_import_textarea").val('');
-	var files = evt.target.files;
+    $("#id_import_textarea").val('');
+    var files = evt.target.files;
 
-        var title ="";
+    var title = "";
 
-	// Import each files content to the textarea
-	for (var i = 0, f; f = files[i]; i++) {
-		var reader = new FileReader();
+    // Import each files content to the textarea
+    for (var i = 0, f; f = files[i]; i++) {
+        var reader = new FileReader();
 
-		reader.onload = (function(theFile) {
-                        title += theFile.name.substring(0, theFile.name.length-4);
-			return function(e) {
-			  $("#id_import_textarea").val($("#id_import_textarea").val()+e.target.result);
-                          importWords();
-			};
-		})(f);
-		reader.readAsText(f);
-	}
+        reader.onload = (function (theFile) {
+            title += theFile.name.substring(0, theFile.name.length - 4);
+            return function (e) {
+                $("#id_import_textarea").val($("#id_import_textarea").val() + e.target.result);
+                importWords();
+            };
+        })(f);
+        reader.readAsText(f);
+    }
 
-        //set the title from the filename(s)
-        $(".title").html(title);
-        document.title = title;
+    //set the title from the filename(s)
+    $(".title").html(title);
+    document.title = title;
 
-	$("#files").val('');
+    $("#files").val('');
+}
+
+function setMode(mode){
+    $("#mode_select").val(mode);
+    CURRENT_MODE = mode;
+    $('.flux').each(function(index) {
+        this.innerHTML = CONFIG[CURRENT_MODE][this.id];
+    });    
 }
 
 function onLoad() {
@@ -327,7 +350,7 @@ $(document).ready(function() {
     // adding Active class to first selected tab and show
     $("ul.tabs li:first").addClass("active").show();
 
-	$('#files').change(handleFileSelect);
+    $('#files').change(handleFileSelect);
 
     // Click event on tab
     $("ul.tabs li").click(function() {
@@ -344,9 +367,6 @@ $(document).ready(function() {
     });
 
     $("#mode_select").change(function() {
-        CURRENT_MODE = this.value;
-        $('.flux').each(function(index) {
-            this.innerHTML = CONFIG[CURRENT_MODE][this.id];
-        })
+        setMode(this.value);
     });
 });
