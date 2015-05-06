@@ -5,43 +5,51 @@
 # ------------
 # Takes all external css and js-files in one html-file.
 
-import os;
+import os
 
-INPUT='vocable.html'
-OUTPUT='build/vocable.html'
+INPUT_FILENAME = 'vocable.html'
+OUTPUT_FILENAME = 'build/vocable.html'
 
-if not os.path.exists('build'):
-  os.makedirs('build')
-
-file = open(OUTPUT, "w")
 
 def find_between(s, first, last):
-  try:
-    start = s.index(first) + len(first)
-    end = s.index(last, start)
-    return s[start:end]
-  except ValueError:
-    return ""
+    try:
+        start = s.index(first) + len(first)
+        end = s.index(last, start)
+        return s[start:end]
+    except ValueError:
+        return ''
+
 
 def get_file_content(path):
-  f = open(path, 'r')
-  return f.read()
+    with open(path, 'r') as f:
+        return f.read()
 
-def js_include( line ):
-  path = find_between(line, 'src="', '"')
-  js = get_file_content(path)
-  return '<script type="text/javascript">\n'+js+'\n</script>\n'
 
-def css_include( line ):
-  path = find_between(line, 'href="', '"')
-  css = get_file_content(path)
-  return '<style>\n'+css+'\n</style>\n'
+def js_include(line):
+    path = find_between(line, 'src="', '"')
+    js = get_file_content(path)
+    return '<script type="text/javascript">\n' + js + '\n</script>\n'
 
-with open(INPUT) as input_file:
-  for line in input_file:
-    if line.strip().startswith('<script src='):
-      file.write(js_include(line.strip()))
-    elif line.strip().startswith('<link rel="stylesheet"'):
-      file.write(css_include(line.strip()))
-    else: 
-      file.write(line)
+
+def css_include(line):
+    path = find_between(line, 'href="', '"')
+    css = get_file_content(path)
+    return '<style>\n' + css + '\n</style>\n'
+
+
+def main():
+    if not os.path.exists('build'):
+        os.makedirs('build')
+
+    with open(OUTPUT_FILENAME, 'w') as out_file:
+        with open(INPUT_FILENAME) as in_file:
+            for line in in_file:
+                if line.strip().startswith('<script src='):
+                    out_file.write(js_include(line.strip()))
+                elif line.strip().startswith('<link rel="stylesheet"'):
+                    out_file.write(css_include(line.strip()))
+                else:
+                    out_file.write(line)
+
+if __name__ == '__main__':
+    main()
