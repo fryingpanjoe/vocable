@@ -11,4 +11,4 @@ To get the standalone html-file of the app go to [releases](https://github.com/f
 
 Build
 -----
-To "build" a standalone html-file from the source code runt ````build.py```
+To "build" a standalone html-file from the source code run ```build.py```
