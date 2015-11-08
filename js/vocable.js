@@ -32,6 +32,7 @@ function splitAndTrimWordList(text) {
 
 function showNextWord() {
     if (TEST_WORDS.length === 0) {
+        $('#id_question').html("");
         $("#test_check_button").hide();
         $("#test_skip_button").hide();
         $("#id_test_result").html("Du klarade provet!");
