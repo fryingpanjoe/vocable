@@ -14,7 +14,8 @@ tbody td{
 }
 
 #toolbar{
-    width: 95%;
+    margin-left: 8px;
+    margin-right: 8px;
     background-color: #F5F5F5;
     -moz-border-radius:8px;
     -webkit-border-radius:8px;
