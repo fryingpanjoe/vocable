@@ -14,7 +14,7 @@
         <h1 class="title">Krimilingo</h1>
         <div id="content">
             <div id="toolbar">
-                <div id="toolbarcontent">
+                <div id="id_toolbar_edit" class="toolbarcontent">
                     <input type="file" id="files" name="files[]" style="display:none;" multiple />
                     <a id="fileSelect" class="button" onclick="$('#files').click();">Öppna</a>
                     <a class="button" onClick="saveList()">Spara</a>
@@ -26,6 +26,9 @@
                         <option value="quiz">Quiz</option>
                         <option value="math">Matematik</option>
                     </select>
+                </div>
+                <div id="id_toolbar_quiz" class="toolbarcontent">
+                    <a class="button" id="test_end_button" onClick="handleStopTest()">Avsluta quiz</a>
                 </div>
             </div>
             <div id="input">
@@ -55,7 +58,6 @@
                     </form>
                     <input type="hidden" name="test_index" id="test_index">
                     <input type="submit" value="Hoppa över" onClick="handleTestSkip()" id="test_skip_button">
-                    <input type="submit" value="Avsluta test" onClick="handleStopTest()" id="test_end_button">
                     <h3 id="id_test_score"></h3>
                     <h3 id="id_test_result"></h3>
                 </div>

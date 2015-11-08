@@ -112,6 +112,8 @@ function updateScore() {
 }
 
 function handleStartTest() {
+    $("#id_toolbar_edit").hide();
+    $("#id_toolbar_quiz").show();
     $("#quiz").show();
     $("#input").hide();
     $("#id_start_test").hide();
@@ -134,6 +136,8 @@ function handleStartTest() {
 }
 
 function handleStopTest() {
+    $("#id_toolbar_edit").show();
+    $("#id_toolbar_quiz").hide();
     $("#quiz").hide();
     $("#input").show();
     $("#id_test_mode").hide();
@@ -225,6 +229,7 @@ $(document).ready(function() {
     $("#id_test_mode").hide();
     $("#id_test_score").hide();
     $("#id_test_result").hide();
+    $("#id_toolbar_quiz").hide();
 
     $("#id_add_word_form").submit(function( e ) {
         var word = $.trim($('[name="word"]').val());
