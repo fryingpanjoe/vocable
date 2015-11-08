@@ -6,6 +6,8 @@ bird:fågel
 red:röd
 green:grön
 blue:blå
+dwarf:dvärg
+gold:guld
 drain:vask
 cottage:stuga
 trollop:slampa
