@@ -2,7 +2,7 @@ var MODE_QUIZ = 'quiz';
 var MODE_LANG = 'lang';
 var MODE_MATH = 'math';
 
-var CURRENT_MODE = MODE_QUIZ;
+var CURRENT_MODE = MODE_LANG;
 
 var CORRECT_THRESHOLD = 2;
 
