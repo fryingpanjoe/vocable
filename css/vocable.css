@@ -16,8 +16,26 @@ body{
     width: 1024px;
 }
 
+.word_list_table{
+    width: 50%;
+}
+.word_list_table th{
+    font-size: 18pt;
+}
+.word_list_table input{
+    font-size: 14pt;
+}
 .word_list_table td{
+    width: 25%;
     border: 0;
+    font-size: 18pt;
+}
+.word_list_table th{
+    width: 25%;
+    text-align: center;
+}
+.word_list_table tbody{
+    text-align: center;
 }
 
 .title{
