@@ -112,18 +112,7 @@ function updateScore() {
 }
 
 function handleStartTest() {
-    $("#id_toolbar_edit").hide();
-    $("#id_toolbar_quiz").show();
-    $("#quiz").show();
-    $("#input").hide();
-    $("#id_start_test").hide();
-    $("#id_test_mode").show();
-    $("#id_test_score").show();
-    $("#id_test_score").html("");
-    $("#id_test_result").show();
-    $("#id_test_result").html("");
-    $("#test_check_button").show();
-    $("#test_skip_button").show();
+
     TEST_WORDS = new Array();
     for (var i = 0; i < WORDS.length; i++) {
         TEST_WORDS.push({
@@ -131,8 +120,26 @@ function handleStartTest() {
             correct: 0
         });
     }
-    updateScore();
-    showNextWord();
+    
+    if(TEST_WORDS.length > 0){    
+        $("#id_toolbar_edit").hide();
+        $("#id_toolbar_quiz").show();
+        $("#quiz").show();
+        $("#input").hide();
+        $("#id_start_test").hide();
+        $("#id_test_mode").show();
+        $("#id_test_score").show();
+        $("#id_test_score").html("");
+        $("#id_test_result").show();
+        $("#id_test_result").html("");
+        $("#test_check_button").show();
+        $("#test_skip_button").show();
+
+        updateScore();
+        showNextWord();
+    }else{
+        alert("Öppna en lista eller skriv in ett par ord");
+    }
 }
 
 function handleStopTest() {
