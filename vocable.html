@@ -14,22 +14,22 @@
         <h1 class="title">Krimilingo</h1>
 
         <div id="content">
-            <div id="input">
-                <div id="toolbar">
-                    <div id="toolbarcontent">
-                        <input type="file" id="files" name="files[]" style="display:none;" multiple />
-                        <a id="fileSelect" class="button" onclick="$('#files').click();">Öppna</a>
-                        <a class="button" onClick="saveList()">Spara</a>
-                        <a class="button" onClick="window.print();">Skriv ut</a>
-                        <a id="id_start_test" class="button" onClick="handleStartTest()">Starta quiz</a>
-                        <span>Mode:</span>
-                        <select id="mode_select" style="font-size: 18px;">
-                            <option value="lang">Språk</option>
-                            <option value="quiz">Quiz</option>
-                            <option value="math">Matematik</option>
-                        </select>
-                    </div>
+            <div id="toolbar">
+                <div id="toolbarcontent">
+                    <input type="file" id="files" name="files[]" style="display:none;" multiple />
+                    <a id="fileSelect" class="button" onclick="$('#files').click();">Öppna</a>
+                    <a class="button" onClick="saveList()">Spara</a>
+                    <a class="button" onClick="window.print();">Skriv ut</a>
+                    <a id="id_start_test" class="button" onClick="handleStartTest()">Starta quiz</a>
+                    <span>Mode:</span>
+                    <select id="mode_select" style="font-size: 18px;">
+                        <option value="lang">Språk</option>
+                        <option value="quiz">Quiz</option>
+                        <option value="math">Matematik</option>
+                    </select>
                 </div>
+            </div>
+            <div id="input">
                 <div id="id_word_list">
                     <form id="id_add_word_form">
                         <table class="word_list_table">
