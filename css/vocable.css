@@ -5,12 +5,23 @@ tbody td{
     border:1px solid black;
 }
 
+body{
+    margin-left: auto;
+    margin-right: auto;
+    width: 1024px;
+}
+
 .word_list_table td{
     border: 0;
 }
 
 .title{
-    margin-bottom: 7px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+    font-size: 64pt;
 }
 
 #toolbar{
@@ -20,7 +31,11 @@ tbody td{
     -moz-border-radius:8px;
     -webkit-border-radius:8px;
     border-radius:8px;
-    padding:8px;
+    padding: 16px;
+}
+
+#toolbarcontent{
+    text-align: center;
 }
 
 #id_word_list{
