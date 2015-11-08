@@ -226,7 +226,7 @@ $(document).ready(function() {
     $("#id_test_score").hide();
     $("#id_test_result").hide();
 
-    $( "#id_add_word_form" ).submit(function( e ) {
+    $("#id_add_word_form").submit(function( e ) {
         var word = $.trim($('[name="word"]').val());
         var translation = $.trim($('[name="translation"]').val());
         if(word != '' && translation != ''){
@@ -246,7 +246,7 @@ $(document).ready(function() {
         showWordList();
     });
 
-    $( "#id_test_form" ).submit(function( e ) {
+    $("#id_test_form").submit(function( e ) {
         handleTestCheck();
         e.returnValue = false;
         if(e.preventDefault) e.preventDefault();
@@ -260,20 +260,6 @@ $(document).ready(function() {
     $("ul.tabs li:first").addClass("active").show();
 
     $('#files').change(handleFileSelect);
-
-    // Click event on tab
-    $("ul.tabs li").click(function() {
-        // Removing class of Active tab
-        $("ul.tabs li.active").removeClass("active");
-        // Adding Active class to Clicked tab
-        $(this).addClass("active");
-        // hiding all the tab contents
-        $(".tabContent").hide();
-        // showing the clicked tab's content using fading effect
-        $($('a',this).attr("href")).fadeIn('fast');
-
-        return false;
-    });
 
     $("#mode_select").change(function() {
         setMode(this.value);
