@@ -240,10 +240,16 @@ $(document).ready(function() {
             showWordList();
 
             $("#id_add_word_form")[0].reset();
-            $('[name="word"]').focus();
+            $("[name='word']").focus();
         }
         e.returnValue = false;
         if(e.preventDefault) e.preventDefault();
+    });
+    
+    $("[name='word']").keypress(function(e) {
+        if(e.which == 13 && $("[name='word']").val().length > 0) {
+            $("[name='translation']").focus();
+        }
     });
 
     $("#removeAll").click( function(){
