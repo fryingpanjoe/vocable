@@ -277,4 +277,7 @@ $(document).ready(function() {
     $("#mode_select").change(function() {
         setMode(this.value);
     });
+
+    // make sure we're in the right mode
+    setMode(CURRENT_MODE);
 });
