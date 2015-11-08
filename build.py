@@ -3,7 +3,8 @@
 
 # Build script
 # ------------
-# Takes all external css and js-files in one html-file.
+# Includes content from referenced external css and js-files 
+# and add it to the output html-file.
 
 import os
 
