@@ -189,10 +189,10 @@ function handleTestCheck() {
             --TEST_WORDS[index].correct;
         }
         // show next word if we're going in random order
-        if (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD ||
+        /*if (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD ||
             TEST_MODE == TEST_MODE_RANDOM_FOREVER) {
             showNextWord();
-        } else {
+        } else*/ {
             // otherwise just clear the input and let the user try again
             $("#test_answer").val("");
         }
