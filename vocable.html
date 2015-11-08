@@ -12,7 +12,6 @@
     </head>
     <body>
         <h1 class="title">Krimilingo</h1>
-
         <div id="content">
             <div id="toolbar">
                 <div id="toolbarcontent">
@@ -55,18 +54,15 @@
                         <input type="submit" value="Rätta" id="test_check_button">
                     </form>
                     <input type="hidden" name="test_index" id="test_index">
-
                     <input type="submit" value="Hoppa över" onClick="handleTestSkip()" id="test_skip_button">
                     <input type="submit" value="Avsluta test" onClick="handleStopTest()" id="test_end_button">
                     <h3 id="id_test_score"></h3>
                     <h3 id="id_test_result"></h3>
                 </div>
             </div>
-
             <div id="load" style="display: none;">
                 <form id="id_import_form">
                     <textarea id="id_import_textarea" rows="12" cols="40"></textarea><br />
-
                     <input type="file" id="files" name="files[]" multiple /><br />
                     <input type="button" value="Spara" onClick="saveList()">
                 </form>
