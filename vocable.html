@@ -28,6 +28,7 @@
                     </select>
                 </div>
                 <div id="id_toolbar_quiz" class="toolbarcontent">
+                    <a class="button" id="test_skip_button" onClick="handleTestSkip()">Hoppa över</a>
                     <a class="button" id="test_end_button" onClick="handleStopTest()">Avsluta quiz</a>
                 </div>
             </div>
@@ -57,7 +58,6 @@
                         <input type="submit" value="Rätta" id="test_check_button">
                     </form>
                     <input type="hidden" name="test_index" id="test_index">
-                    <input type="submit" value="Hoppa över" onClick="handleTestSkip()" id="test_skip_button">
                     <h3 id="id_test_score"></h3>
                     <h3 id="id_test_result"></h3>
                 </div>
