@@ -50,6 +50,11 @@ body{
     margin-left: 8px;
 }
 
+#contentwrapper{
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
 #id_start_test{
     margin-left: 16px;
 }
