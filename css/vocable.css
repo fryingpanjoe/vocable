@@ -16,6 +16,13 @@ body{
     width: 1024px;
 }
 
+button{
+    font-size: 14pt;
+    font-weight: bold;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
 .word_list_table{
     width: 50%;
 }
