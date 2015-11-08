@@ -1,6 +1,11 @@
-*{font-family: Arial, sans-serif;}
+*{
+    font-family: Arial, sans-serif;
+}
 
-th{text-align: left;}
+th{
+    text-align: left;
+}
+
 tbody td{
     border:1px solid black;
 }
