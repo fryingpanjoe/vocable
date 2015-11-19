@@ -186,9 +186,13 @@ function handleTestCheck() {
     var solutions = splitAndTrimWordList($.trim($("#test_solution").val().toLowerCase()));
     var index = $("#test_index").val();
     // check answer (can be comma separated array)
+    /* Deactivate until logic is fixed reported in bug #24
     var is_correct = CURRENT_MODE == MODE_LANG ?
         checkAnswersWithSpelling(answers, solutions) :
         checkAnswers(answers, solutions);
+    */
+    var is_correct = checkAnswers(answers, solutions);
+
     if (!is_correct) {
         $("#id_test_result").html("Fel!");
         // decrement correct counter if set to
