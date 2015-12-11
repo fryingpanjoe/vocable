@@ -266,6 +266,8 @@ $(document).ready(function() {
     $("#removeAll").click( function(){
         WORDS = new Array();
         showWordList();
+		$(".title").html('Krimilingo');
+		document.title = 'Krimilingo';
     });
 
     $("#id_test_form").submit(function( e ) {
