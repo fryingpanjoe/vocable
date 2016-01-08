@@ -120,8 +120,8 @@ function handleStartTest() {
             correct: 0
         });
     }
-    
-    if(TEST_WORDS.length > 0){    
+
+    if(TEST_WORDS.length > 0){
         $("#id_toolbar_edit").hide();
         $("#id_toolbar_quiz").show();
         $("#quiz").show();
@@ -256,7 +256,7 @@ $(document).ready(function() {
         e.returnValue = false;
         if(e.preventDefault) e.preventDefault();
     });
-    
+
     $("[name='word']").keypress(function(e) {
         if(e.which == 13 && $("[name='word']").val().length > 0) {
             $("[name='translation']").focus();
@@ -266,8 +266,8 @@ $(document).ready(function() {
     $("#removeAll").click( function(){
         WORDS = new Array();
         showWordList();
-		$(".title").html('Krimilingo');
-		document.title = 'Krimilingo';
+        $(".title").html('Krimilingo');
+        document.title = 'Krimilingo';
     });
 
     $("#id_test_form").submit(function( e ) {
