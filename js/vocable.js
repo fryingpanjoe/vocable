@@ -158,43 +158,59 @@ function handleStopTest() {
     $('[name="word"]').focus();
 }
 
-function checkAnswersWithSpelling(answers, solutions) {
-    for (var i in answers) {
-        for (var j in solutions) {
-            if (spellScore(answers[i], solutions[j]) <= 1) {
-                return true;
-            }
-        }
+function makeResult(correctness, feedback_text) {
+    return {
+        correctness: correctness,
+        feedback_text: feedback_text,
     }
-    return false;
 }
 
-function checkAnswers(answers, solutions) {
-    for (var i in answers) {
-        if (solutions.indexOf(answers[i]) < 0) {
-            return false;
-        }
+function checkAnswerWithSpelling(answer, solutions) {
+    var min_edist = undefined;
+    for (var i in solutions) {
+        var edist = editDistance(answer, solutions[i]);
+        min_edist = (min_edist === undefined || edist < min_edist) ? edist : min_edist;
     }
-    return answers.length > 0;
+    // The edit distance to consider "close" to the final word.
+    // FIXME(fpj): Use a proper spelling library to also check for the sound of
+    //             the incorrect character.
+    // FIXME(fpj): Also take into account the length of the word. We don't want
+    //             the edit distance alone to be the spelling score since "wk"
+    //             is just edit distance 2 from the word "walk".
+    // FIXME(fpj): Consider highlighting letters that are in the correct place
+    //             in the word as well.
+    var almost_edist = 3;
+    if (min_edist == 0) {
+        return makeResult(1.0, "Rätt!");
+    } else if (min_edist < almost_edist) {
+        return makeResult(1.0 - (1.0 / (almost_edist - min_edist)), "Nästan rätt!");
+    } else {
+        return makeResult(0.0, "Fel!");
+    }
+}
+
+function checkAnswer(answer, solutions) {
+    if (solutions.indexOf(answer) >= 0) {
+        return makeResult(1.0, "Rätt!");
+    } else {
+        return makeResult(0.0, "Fel!");
+    }
 }
 
 function handleTestCheck() {
     if (TEST_WORDS.length == 0) {
         return;
     }
-    var answers = splitAndTrimWordList($.trim($("#test_answer").val().toLowerCase()));
+    var answer = $.trim($("#test_answer").val().toLowerCase());
     var solutions = splitAndTrimWordList($.trim($("#test_solution").val().toLowerCase()));
     var index = $("#test_index").val();
     // check answer (can be comma separated array)
-    /* Deactivate until logic is fixed reported in bug #24
-    var is_correct = CURRENT_MODE == MODE_LANG ?
-        checkAnswersWithSpelling(answers, solutions) :
-        checkAnswers(answers, solutions);
-    */
-    var is_correct = checkAnswers(answers, solutions);
+    var result = CURRENT_MODE == MODE_LANG ?
+        checkAnswerWithSpelling(answer, solutions) :
+        checkAnswer(answer, solutions);
 
-    if (!is_correct) {
-        $("#id_test_result").html("Fel!");
+    if (result.correctness < 1.0) {
+        $("#id_test_result").html(result.feedback_text);
         // decrement correct counter if set to
         if (TEST_DECREMENT_ON_FAIL && TEST_WORDS[index].correct > 0) {
             --TEST_WORDS[index].correct;
@@ -203,10 +219,10 @@ function handleTestCheck() {
         /*if (TEST_MODE == TEST_MODE_RANDOM_REMOVE_THRESHOLD ||
             TEST_MODE == TEST_MODE_RANDOM_FOREVER) {
             showNextWord();
-        } else*/ {
+        } else {
             // otherwise just clear the input and let the user try again
             $("#test_answer").val("");
-        }
+        }*/
     } else {
         $("#id_test_result").html("Rätt!");
         ++TEST_WORDS[index].correct;
