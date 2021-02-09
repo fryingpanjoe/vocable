@@ -167,9 +167,14 @@ function makeResult(correctness, feedback_text) {
 
 function checkAnswerWithSpelling(answer, solutions) {
     var min_edist = undefined;
+    var min_solution = undefined;
     for (var i in solutions) {
-        var edist = editDistance(answer, solutions[i]);
-        min_edist = (min_edist === undefined || edist < min_edist) ? edist : min_edist;
+        var solution = solutions[i];
+        var edist = editDistance(answer, solution);
+        if (min_edist === undefined || edist < min_edist) {
+            min_edist = edist;
+            min_solution = solution;
+        }
     }
     // The edit distance to consider "close" to the final word.
     // FIXME(fpj): Use a proper spelling library to also check for the sound of
@@ -183,7 +188,7 @@ function checkAnswerWithSpelling(answer, solutions) {
     if (min_edist == 0) {
         return makeResult(1.0, "Rätt!");
     } else if (min_edist < almost_edist) {
-        return makeResult(1.0 - (1.0 / (almost_edist - min_edist)), "Nästan rätt!");
+        return makeResult(1.0 - (1.0 / (almost_edist - min_edist)), diffString(answer, min_solution));
     } else {
         return makeResult(0.0, "Fel!");
     }
